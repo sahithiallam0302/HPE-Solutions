@@ -12,9 +12,9 @@ import Contact from './pages/Contact';
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-navy-950 text-white flex flex-col">
+      <div className="min-h-screen bg-[#f8fafc] flex flex-col">
         <Navbar />
-        <main className="flex-grow pt-32"> {/* Increased padding for the new navbar height */}
+        <main className="flex-grow pt-32">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
