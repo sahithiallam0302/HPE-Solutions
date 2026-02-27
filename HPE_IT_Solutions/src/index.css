@@ -7,17 +7,26 @@
   --color-navy-950: #021c27;
 }
 
+@variant dark (&:where(.dark, .dark *));
+
 :root {
-  color-scheme: light;
+  color-scheme: light dark;
 }
 
 body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background-color: #f8fafc; /* Light background */
-  color: #0f172a; /* Dark text */
+  @apply bg-slate-50 text-slate-900 transition-colors duration-300;
   min-height: 100vh;
+}
+
+.dark body {
+  @apply bg-[#011b26] text-white;
+}
+
+.dark {
+  color-scheme: dark;
 }
 
 #root {
