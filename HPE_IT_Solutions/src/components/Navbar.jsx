@@ -1,7 +1,10 @@
 import { Link, useLocation } from 'react-router-dom';
+import { Sun, Moon } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
 
 function Navbar() {
     const location = useLocation();
+    const { theme, toggleTheme } = useTheme();
 
     const navLinks = [
         { name: 'HOME', path: '/' },
@@ -13,15 +16,15 @@ function Navbar() {
     ];
 
     return (
-        <nav className="bg-[#011b26] border-b border-white/10 px-6 py-4 fixed w-full top-0 z-50">
-            <div className="max-w-[1400px] mx-auto flex items-center justify-between">
+        <nav className="bg-[#011b26] border-b border-white/10 px-6 h-20 fixed w-full top-0 z-50">
+            <div className="max-w-[1400px] mx-auto flex items-center justify-between h-full relative">
                 {/* Logo Section */}
-                <Link to="/" className="flex items-center space-x-3">
-                    <div className="w-12 h-10 bg-white"></div> {/* Placeholder for the white box in image */}
-                    <div className="flex flex-col leading-none">
-                        <span className="text-white font-black text-2xl tracking-tighter">HPE</span>
-                        <span className="text-[#ff8d00] font-bold text-[10px] tracking-widest uppercase mt-0.5">IT SOLUTIONS</span>
-                    </div>
+                <Link to="/" className="relative flex items-center h-full">
+                    <img
+                        src="/HPE LOGO.png"
+                        alt="HPE IT Solutions Logo"
+                        className="h-32 w-auto object-contain transition-transform hover:scale-105 brightness-110"
+                    />
                 </Link>
 
                 {/* Nav Links */}
@@ -45,13 +48,28 @@ function Navbar() {
                     })}
                 </ul>
 
-                {/* CTA Button */}
-                <Link
-                    to="/contact"
-                    className="bg-[#ff8d00] hover:bg-[#e67e00] text-white px-8 py-3 rounded-full text-xs font-black tracking-widest transition-all transform active:scale-95 shadow-lg shadow-orange-500/20"
-                >
-                    GET STARTED
-                </Link>
+                <div className="flex items-center space-x-4">
+                    {/* Theme Toggle Button */}
+                    <button
+                        onClick={toggleTheme}
+                        className="p-2.5 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-all text-white cursor-pointer group"
+                        aria-label="Toggle Theme"
+                    >
+                        {theme === 'dark' ? (
+                            <Sun className="w-4 h-4 text-[#ff8d00] group-hover:rotate-45 transition-transform" />
+                        ) : (
+                            <Moon className="w-4 h-4 text-[#00b0d4] group-hover:-rotate-12 transition-transform" />
+                        )}
+                    </button>
+
+                    {/* CTA Button */}
+                    <Link
+                        to="/contact"
+                        className="bg-[#ff8d00] hover:bg-[#e67e00] text-white px-8 py-3 rounded-full text-xs font-black tracking-widest transition-all transform active:scale-95 shadow-lg shadow-orange-500/20"
+                    >
+                        GET STARTED
+                    </Link>
+                </div>
             </div>
         </nav>
     );

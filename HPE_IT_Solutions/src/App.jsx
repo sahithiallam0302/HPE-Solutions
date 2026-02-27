@@ -12,7 +12,7 @@ import Contact from './pages/Contact';
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-[#f8fafc] flex flex-col">
+      <div className="min-h-screen bg-slate-50 dark:bg-[#011b26] flex flex-col transition-colors duration-300">
         <Navbar />
         <main className="flex-grow pt-32">
           <Routes>
