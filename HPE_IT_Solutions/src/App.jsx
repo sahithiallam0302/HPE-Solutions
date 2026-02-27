@@ -9,15 +9,18 @@ import ProjectsPage from './pages/ProjectsPage';
 import CertificationsPage from './pages/CertificationsPage';
 import Contact from './pages/Contact';
 
+import VisionMission from './pages/VisionMission';
+
 function App() {
   return (
     <Router>
       <div className="min-h-screen bg-[#f8fafc] flex flex-col">
         <Navbar />
-        <main className="flex-grow pt-32">
+        <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
+            <Route path="/vision-mission" element={<VisionMission />} />
             <Route path="/services" element={<ServicesPage />} />
             <Route path="/projects" element={<ProjectsPage />} />
             <Route path="/certifications" element={<CertificationsPage />} />
