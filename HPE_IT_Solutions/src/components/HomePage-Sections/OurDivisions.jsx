@@ -11,9 +11,9 @@ const OurDivisions = () => {
         },
         {
             title: "Brick-Oriented Infrastructure Services",
-            icon: <HardHat className="w-8 h-8 text-white" />,
+            icon: <HardHat className="w-8 h-8 text-[#00b0d4]" />,
             description: "Construction Digital Monitoring, Real Estate ERP Systems, Vendor & Procurement Management, Site Workforce Automation.",
-            highlight: true
+            highlight: false
         },
         {
             title: "Workforce & Non-IT Services",

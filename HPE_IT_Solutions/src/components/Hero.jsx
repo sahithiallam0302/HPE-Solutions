@@ -9,8 +9,16 @@ function Hero() {
     });
 
     // Transforms for the front cover slide-up effect
-    const frontY = useTransform(scrollYProgress, [0, 0.5], ["0%", "-100%"]);
-    const frontOpacity = useTransform(scrollYProgress, [0, 0.45], [1, 0]);
+    // We start sliding up slowly and fading out precisely to prevent empty gaps
+    const frontY = useTransform(scrollYProgress, [0, 0.6], ["0%", "-100%"]);
+    const frontOpacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
+
+    // Transforms for the inside cover content
+    // Starts scaling up exactly as the front cover begins to fade
+    const insideScale = useTransform(scrollYProgress, [0.1, 0.6], [0.95, 1]);
+    const insideOpacity = useTransform(scrollYProgress, [0.1, 0.5], [0, 1]);
+    // Tiny subtle Y shift for the inside cover to make it feel alive
+    const insideY = useTransform(scrollYProgress, [0.1, 0.6], [50, 0]);
 
     return (
         <section
@@ -20,10 +28,48 @@ function Hero() {
         >
             <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden">
 
-                {/* --- FRONT COVER (100vh) --- */}
+                {/* --- INSIDE COVER (Background Layer) --- */}
+                {/* Placed correctly in DOM order to sit beneath the front cover */}
+                <motion.div
+                    style={{
+                        scale: insideScale,
+                        opacity: insideOpacity,
+                        y: insideY
+                    }}
+                    className="absolute inset-0 z-10 flex flex-col items-center justify-center px-4 bg-[#011b26] text-white"
+                >
+                    <div className="max-w-4xl text-center px-6">
+                        <header className="mb-10">
+                            <h2 className="text-brand-orange font-bold tracking-[0.3em] uppercase mb-6 text-sm">Strategic Governance</h2>
+                            <p className="text-3xl md:text-5xl font-bold leading-tight">
+                                Delivering integrated <span className="text-brand-orange">digital</span> and <br />
+                                <span className="bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
+                                    physical infrastructure
+                                </span> ecosystems.
+                            </p>
+                        </header>
+
+                        <div className="space-y-6 mb-12">
+                            <p className="text-slate-300 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
+                                Delivering across India through enterprise technology platforms, structured
+                                workforce deployment, and centralized governance frameworks.
+                            </p>
+                            <p className="text-slate-400 text-base md:text-lg max-w-2xl mx-auto font-medium">
+                                We enable scalable, compliant, and performance-driven execution models for
+                                enterprise and infrastructure clients nationwide.
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Decorative Elements for Premium Feel */}
+                    <div className="absolute top-1/4 -right-20 w-80 h-80 bg-brand-orange/10 rounded-full blur-[100px] pointer-events-none" />
+                    <div className="absolute bottom-1/4 -left-20 w-80 h-80 bg-blue-500/10 rounded-full blur-[100px] pointer-events-none" />
+                </motion.div>
+
+                {/* --- FRONT COVER (Top Layer) --- */}
                 <motion.div
                     style={{ y: frontY, opacity: frontOpacity }}
-                    className="absolute inset-0 z-20 flex flex-col items-center justify-center px-4 bg-white dark:bg-[#011b26] transition-colors duration-300"
+                    className="absolute inset-0 z-20 flex flex-col items-center justify-center px-4 bg-white dark:bg-[#011b26] transition-colors duration-300 shadow-[0_20px_60px_rgba(0,0,0,0.5)]"
                 >
                     <div className="max-w-5xl text-center">
                         <motion.h1
@@ -50,12 +96,20 @@ function Hero() {
                             </p>
 
                             <div className="flex flex-col sm:flex-row gap-4 mb-12">
-                                <button className="bg-[#011b26] dark:bg-white text-white dark:text-[#011b26] px-10 py-4 rounded-full font-bold hover:scale-105 transition-all shadow-xl cursor-pointer">
+                                <motion.button
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    className="bg-[#011b26] dark:bg-white text-white dark:text-[#011b26] px-10 py-4 rounded-full font-bold transition-all shadow-xl cursor-pointer"
+                                >
                                     Contact Us
-                                </button>
-                                <button className="border-2 border-[#011b26]/10 dark:border-white/10 text-[#011b26] dark:text-white px-10 py-4 rounded-full font-bold hover:bg-slate-50 dark:hover:bg-white/5 transition-colors cursor-pointer">
+                                </motion.button>
+                                <motion.button
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    className="border-2 border-[#011b26]/10 dark:border-white/10 text-[#011b26] dark:text-white px-10 py-4 rounded-full font-bold hover:bg-slate-50 dark:hover:bg-white/5 transition-colors cursor-pointer"
+                                >
                                     Our Projects
-                                </button>
+                                </motion.button>
                             </div>
 
                             <div className="flex flex-col items-center gap-2">
