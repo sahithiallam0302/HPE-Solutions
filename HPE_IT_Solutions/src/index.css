@@ -3,8 +3,8 @@
 @theme {
   --color-brand-orange: #ff8d00;
   --color-brand-cyan: #00b0d4;
-  --color-navy-900: #011b26;
-  --color-navy-950: #021c27;
+  --color-navy-900: #0b1220;
+  --color-navy-950: #030c13;
 }
 
 @variant dark (&:where(.dark, .dark *));
@@ -13,16 +13,21 @@
   color-scheme: light dark;
 }
 
+html {
+  scroll-behavior: smooth;
+  font-family: 'Outfit', 'Inter', sans-serif;
+}
+
 body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  @apply bg-slate-50 text-slate-900 transition-colors duration-300;
+  @apply bg-[#0b1220] text-white transition-colors duration-500;
   min-height: 100vh;
 }
 
 .dark body {
-  @apply bg-[#011b26] text-white;
+  @apply bg-[#0b1220] text-white;
 }
 
 .dark {
@@ -31,4 +36,23 @@ body {
 
 #root {
   width: 100%;
+}
+
+/* ── Enterprise Typography Scale ── */
+.text-huge {
+  font-size: clamp(3rem, 7vw, 6.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  font-weight: 900;
+}
+
+/* ── Premium Scroll Animations ── */
+.reveal-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal-up.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }

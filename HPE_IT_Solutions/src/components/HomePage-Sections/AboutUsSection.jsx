@@ -22,7 +22,7 @@ const AboutUsSection = () => {
                         <span className="text-brand-orange text-xs md:text-sm font-black tracking-[0.3em] uppercase mb-4 block">
                             ABOUT US
                         </span>
-                        <h2 id="about-heading" className="text-4xl md:text-5xl font-black text-[#011b26] dark:text-white leading-tight">
+                        <h2 id="about-heading" className="text-2xl md:text-3xl font-black text-[#011b26] dark:text-white leading-tight">
                             Pioneering Enterprise <br />
                             Infrastructure for a <br />
                             <span className="text-[#00b0d4]">Digital-First Future.</span>

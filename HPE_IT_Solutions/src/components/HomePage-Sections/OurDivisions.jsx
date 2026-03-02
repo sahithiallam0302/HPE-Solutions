@@ -32,7 +32,7 @@ const OurDivisions = () => {
                     <span className="text-brand-orange text-xs md:text-sm font-black tracking-[0.3em] uppercase mb-4 block">
                         OUR DIVISIONS
                     </span>
-                    <h2 id="divisions-heading" className="text-4xl md:text-5xl font-black text-[#011b26] dark:text-white mb-6">
+                    <h2 id="divisions-heading" className="text-2xl md:text-3xl font-black text-[#011b26] dark:text-white mb-6">
                         Three Pillars of Excellence
                     </h2>
                     <p className="text-slate-500 dark:text-slate-400 text-lg leading-relaxed">
@@ -60,7 +60,7 @@ const OurDivisions = () => {
                             </div>
 
                             {/* Content */}
-                            <h3 className={`text-2xl font-bold mb-4 ${division.highlight ? 'text-white' : 'text-[#011b26] dark:text-white'
+                            <h3 className={`text-lg font-bold mb-4 ${division.highlight ? 'text-white' : 'text-[#011b26] dark:text-white'
                                 }`}>
                                 {division.title}
                             </h3>

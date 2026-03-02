@@ -1,387 +1,327 @@
 import React, { useRef } from 'react';
-import { Link } from 'react-router-dom';
-import { Shield, Monitor, Activity, Users, ArrowRight, MapPin, Globe, Cpu, BarChart3 } from 'lucide-react';
 import { motion, useInView } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import {
+    Shield, Cpu, Box, Network,
+    CheckCircle2, ArrowRight, Target, PlayCircle
+} from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
-const fadeUp = {
-    hidden: { opacity: 0, y: 36 },
-    visible: (i = 0) => ({
-        opacity: 1, y: 0,
-        transition: { duration: 0.7, delay: i * 0.11, ease: [0.22, 1, 0.36, 1] },
-    }),
-};
-const scaleIn = {
-    hidden: { opacity: 0, scale: 0.88, y: 24 },
-    visible: (i = 0) => ({
-        opacity: 1, scale: 1, y: 0,
-        transition: { duration: 0.65, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] },
-    }),
-};
-function AnimatedSection({ children, className = '', delay = 0 }) {
+
+/* ─── Scroll Animation Wrapper ─── */
+const FadeUp = ({ children, className = '', delay = 0 }) => {
     const ref = useRef(null);
-    const inView = useInView(ref, { once: true, margin: '-70px' });
+    const inView = useInView(ref, { once: true, margin: '-60px' });
     return (
-        <motion.div ref={ref} initial="hidden" animate={inView ? 'visible' : 'hidden'}
-            custom={delay} variants={fadeUp} className={className}>
+        <motion.div
+            ref={ref}
+            initial={{ opacity: 0, y: 24 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.75, delay, ease: [0.22, 1, 0.36, 1] }}
+            className={className}
+        >
             {children}
         </motion.div>
     );
-}
+};
 
-/* ─── Glass Stat Card ─────────────────────────────────────────── */
-function StatCard({ value, label, delay, isDark }) {
-    const ref = useRef(null);
-    const inView = useInView(ref, { once: true });
-    return (
-        <motion.div ref={ref} initial="hidden" animate={inView ? 'visible' : 'hidden'}
-            custom={delay} variants={fadeUp}
-            whileHover={{ y: -4, scale: 1.04 }}
-            transition={{ type: 'spring', stiffness: 280, damping: 20 }}
-            className={`flex flex-col items-center justify-center text-center p-6 rounded-3xl border transition-all duration-300
-        ${isDark
-                    ? 'bg-white/5 border-white/10 backdrop-blur-xl hover:bg-white/10 hover:border-cyan-400/35'
-                    : 'bg-white/60 border-white/70 backdrop-blur-xl hover:bg-white/80 hover:border-sky-300/70 shadow-lg shadow-slate-200/40'
-                }`}
-        >
-            <span className={`text-3xl font-black bg-clip-text text-transparent
-        ${isDark
-                    ? 'bg-gradient-to-r from-cyan-300 to-blue-400'
-                    : 'bg-gradient-to-r from-sky-500 to-blue-600'
-                }`}>{value}</span>
-            <span className={`text-[11px] font-bold uppercase tracking-widest mt-1.5
-        ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>{label}</span>
-        </motion.div>
-    );
-}
+const Label = ({ text, color = 'text-orange-400', isDark }) => (
+    <span className={`inline-block text-[10px] font-black uppercase tracking-[0.55em] ${isDark ? color : color.replace('400', '600')}`}>
+        {text}
+    </span>
+);
 
-/* ─── Capability Card ─────────────────────────────────────────── */
-function CapabilityCard({ title, desc, icon, index, isDark }) {
-    const ref = useRef(null);
-    const inView = useInView(ref, { once: true, margin: '-50px' });
-    return (
-        <motion.div ref={ref} initial="hidden" animate={inView ? 'visible' : 'hidden'}
-            custom={index} variants={scaleIn}
-            whileHover={{ y: -8, scale: 1.03 }}
-            transition={{ type: 'spring', stiffness: 260, damping: 18 }}
-            className={`group relative rounded-3xl p-[1px] overflow-hidden transition-all duration-500 cursor-default shadow-md hover:shadow-2xl`}
-        >
-            {/* Fast Rotating Animated Border */}
-            <div className="absolute inset-[-400%] bg-[conic-gradient(from_0deg,transparent,#00b0d4,transparent,#ff8d00,transparent)] animate-[spin_3s_linear_infinite] opacity-40 group-hover:opacity-100 group-hover:animate-[spin_1s_linear_infinite] transition-all duration-500" />
+/* ─── Frosted Glass Panel ─── */
+const Glass = ({ children, className = '', isDark }) => (
+    <div className={`transition-all duration-500 rounded-3xl ${isDark
+        ? 'bg-white/[0.07] backdrop-blur-2xl border border-white/[0.12] shadow-[0_8px_32px_rgba(0,0,0,0.4)]'
+        : 'bg-white border border-slate-200 shadow-xl'
+        } ${className}`}>
+        {children}
+    </div>
+);
 
-            {/* Inner glass */}
-            <div className={`relative h-full rounded-[calc(1.5rem-1px)] p-7 flex flex-col gap-5 transition-all duration-500
-        ${isDark
-                    ? 'bg-[#040f1a]/80 backdrop-blur-2xl group-hover:bg-[#071928]/90'
-                    : 'bg-white/80 backdrop-blur-2xl group-hover:bg-white/95'
-                }`}>
+/* ─── Stat Card ─── */
+const StatCard = ({ value, label, delay, isDark }) => (
+    <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay }}
+        className={`backdrop-blur-xl border rounded-2xl p-5 flex flex-col items-center text-center transition-all duration-300 ${isDark
+            ? 'bg-white/[0.08] border-white/[0.12] hover:bg-white/[0.13]'
+            : 'bg-white border-slate-200 shadow-sm hover:shadow-md'
+            }`}
+    >
+        <span className={`text-2xl md:text-3xl font-black tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>{value}</span>
+        <span className={`mt-2 text-[9px] uppercase font-black tracking-[0.2em] ${isDark ? 'text-white/40' : 'text-slate-400'}`}>{label}</span>
+    </motion.div>
+);
 
-                {/* Floating icon */}
-                <motion.div
-                    animate={{ y: [0, -5, 0] }}
-                    transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: index * 0.5 }}
-                    className={`self-start p-4 rounded-2xl border transition-colors duration-500
-            ${isDark
-                            ? 'bg-white/5 border-white/10 group-hover:border-cyan-400/40 group-hover:bg-cyan-400/8'
-                            : 'bg-white border-slate-200/80 group-hover:border-sky-300/60 group-hover:bg-sky-50/80'
-                        }`}>
-                    {icon}
-                </motion.div>
-
-                <div>
-                    <h3 className={`text-base font-bold mb-2 leading-snug
-            ${isDark ? 'text-white' : 'text-slate-900'}`}>{title}</h3>
-                    <p className={`text-sm leading-relaxed
-            ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>{desc}</p>
-                </div>
-
+/* ─── Structure Card ─── */
+const StructCard = ({ icon: Icon, title, body, delay, isDark }) => (
+    <FadeUp delay={delay}>
+        <div className={`backdrop-blur-2xl border rounded-3xl p-8 group transition-all duration-400 ${isDark
+            ? 'bg-white/[0.07] border-white/[0.12] hover:bg-white/[0.12] hover:border-white/20 hover:shadow-[0_16px_48px_rgba(0,0,0,0.5)]'
+            : 'bg-white border-slate-200 shadow-sm hover:shadow-lg'
+            }`}>
+            <div className={`w-12 h-12 rounded-xl mb-6 flex items-center justify-center transition-all duration-300 ${isDark ? 'bg-white/[0.08] text-orange-400 border border-white/10 group-hover:bg-orange-400 group-hover:text-[#0a0f1e]' : 'bg-slate-50 text-orange-600 border border-slate-200 group-hover:bg-orange-600 group-hover:text-white'}`}>
+                <Icon size={22} strokeWidth={1.5} />
             </div>
-        </motion.div>
-    );
-}
+            <h3 className={`text-[15px] font-black uppercase tracking-tight mb-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>{title}</h3>
+            <p className={`text-sm leading-relaxed font-medium ${isDark ? 'text-white/45' : 'text-slate-500'}`}>{body}</p>
+        </div>
+    </FadeUp>
+);
 
-/* ─── Scoped CSS ─────────────────────────────────────────────── */
-const css = `
-  @keyframes grad-move {
-    0%   { background-position: 0%   50%; }
-    50%  { background-position: 100% 50%; }
-    100% { background-position: 0%   50%; }
-  }
-  .gtext {
-    background: linear-gradient(270deg,#00e5ff,#38bdf8,#818cf8,#fb923c,#00e5ff);
-    background-size: 300% 300%;
-    animation: grad-move 6s ease infinite;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .shimmer {
-    display: none;
-  }
-`;
+/* ═══════════════════════════════════════════ */
 
-/* ═══════════════════════════════════════════════════════════════
-   MAIN COMPONENT
-═══════════════════════════════════════════════════════════════ */
 const About = () => {
     const { theme } = useTheme();
     const isDark = theme === 'dark';
 
-    const capabilities = [
-        {
-            title: 'Enterprise Digital Platforms',
-            icon: <Monitor className={`w-6 h-6 ${isDark ? 'text-cyan-400' : 'text-sky-500'}`} />,
-            desc: 'Advanced digital systems integrated for seamless enterprise-wide operations with high availability and zero-downtime deployment.',
-        },
-        {
-            title: 'Infrastructure Lifecycle Monitoring',
-            icon: <Activity className={`w-6 h-6 ${isDark ? 'text-orange-400' : 'text-orange-500'}`} />,
-            desc: 'Real-time tracking and digitization of physical infrastructure projects, assets, and life-cycle events at national scale.',
-        },
-        {
-            title: 'Workforce Deployment Systems',
-            icon: <Users className={`w-6 h-6 ${isDark ? 'text-cyan-400' : 'text-sky-500'}`} />,
-            desc: 'Decentralized field execution managed through centralized governance and smart, AI-assisted resource allocation.',
-        },
-        {
-            title: 'Compliance-Driven Governance',
-            icon: <Shield className={`w-6 h-6 ${isDark ? 'text-orange-400' : 'text-orange-500'}`} />,
-            desc: 'Rigorous accountability and performance transparency at national scale ensuring every regulatory standard is met.',
-        },
-    ];
-
     const stats = [
-        { value: '70+', label: 'Mergers' },
-        { value: '5', label: 'HQ Hubs' },
-        { value: '12K+', label: 'Engineers' },
-        { value: '99.9%', label: 'Uptime SLA' },
+        { value: '70+', label: 'Strategic Integrations' },
+        { value: '20', label: 'Pan-India States' },
+        { value: '500+', label: 'Active Sites' },
+        { value: 'ISO', label: 'Governance Framework' },
     ];
 
-    const pillars = [
-        { icon: <Globe className="w-4 h-4" />, label: 'Pan-India Operations' },
-        { icon: <Cpu className="w-4 h-4" />, label: 'AI-Powered Infrastructure' },
-        { icon: <BarChart3 className="w-4 h-4" />, label: 'Data-Driven Governance' },
-        { icon: <MapPin className="w-4 h-4" />, label: 'Hyderabad HQ' },
+    const structure = [
+        { icon: Shield, title: 'Centralized Governance', body: 'Unified strategic oversight with financial discipline and compliance protocols across all verticals.' },
+        { icon: Network, title: 'Regional Execution Units', body: 'Decentralized delivery hubs enabling precision execution at the national field level.' },
+        { icon: Box, title: 'Regulatory Framework', body: 'ISO-certified audit infrastructure ensuring accountability and transparency at every layer.' },
+        { icon: Cpu, title: 'Digital Oversight Systems', body: 'Real-time performance tracking and intelligent lifecycle management across multi-site deployments.' },
+    ];
+
+    const footprintPoints = [
+        'Headquartered in Hyderabad with major hubs in Mumbai, Bangalore, Chennai, and Delhi.',
+        'Structured presence across 20 Indian states under a unified governance mandate.',
+        'Centralized strategic oversight combined with agile, decentralized field execution.',
+        'Complex multi-site infrastructure deployments governed by compliance-driven accountability.',
+    ];
+
+    const media = [
+        { src: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc51?q=80&w=2070', label: 'Data Grid Infrastructure' },
+        { src: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070', label: 'Digital Oversight Systems' },
+        { src: 'https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069', label: 'Operations Hub' },
     ];
 
     return (
-        <>
-            <style>{css}</style>
+        <article className={`relative transition-colors duration-500 overflow-x-hidden font-sans ${isDark ? 'bg-[#0a0f1e] text-white' : 'bg-[#f8fafc] text-slate-900'}`}>
 
-            {/* ── Page wrapper ── */}
-            <article className={`relative font-sans overflow-x-hidden transition-colors duration-500
-        ${isDark ? 'bg-[#030c13] text-slate-200' : 'bg-white text-slate-800'}`}>
+            {/* FIXED HERO SECTION */}
+            <header className="fixed top-20 left-0 h-[85vh] min-h-[750px] w-full flex items-start z-0 border-b border-white/5">
+                <video autoPlay loop muted playsInline
+                    className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+                    style={{ objectPosition: 'center center' }}>
+                    <source src="https://player.vimeo.com/external/517090081.hd.mp4?s=ba5b0d00f6848d5069f00a52a926a57088b9dd55&profile_id=174" type="video/mp4" />
+                </video>
 
-                {/* Background is now clean whitespace in light mode, dark space in dark mode */}
+                {/* overlays */}
+                <div className="absolute inset-0 bg-slate-900/40" />
+                <div className={`absolute inset-0 bg-gradient-to-b from-[#0a0f1e]/20 via-transparent ${isDark ? 'to-[#0a0f1e]' : 'to-white'}`} />
 
-                {/* ══════════════════════════════════════════════════════
-            HERO  — video fills 35vh
-        ══════════════════════════════════════════════════════ */}
-                <section className="relative z-10 w-full" style={{ height: '35vh', minHeight: '280px' }}>
-                    {/* Video */}
-                    <video
-                        autoPlay loop muted playsInline preload="auto"
-                        aria-hidden="true"
-                        className="absolute inset-0 w-full h-full object-cover"
+                <div className="relative z-10 w-full max-w-[1600px] mx-auto px-8 md:px-16">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+                        className="flex flex-col items-start text-left gap-8 pt-32 md:pt-40"
                     >
-                        <source
-                            src="https://videos.pexels.com/video-files/3129671/3129671-uhd_2560_1440_30fps.mp4"
-                            type="video/mp4"
-                        />
-                    </video>
+                        <Label text="Institutional Multi-Vertical Enterprise" color="text-orange-400" isDark={true} />
+                        <h1 className="text-3xl md:text-4xl lg:text-6xl font-black uppercase tracking-tight leading-[0.9] text-white max-w-5xl">
+                            About<br />
+                            <span className="bg-gradient-to-r from-orange-400 via-blue-400 to-blue-600 bg-clip-text text-transparent">HPE IT Solutions</span>
+                        </h1>
+                        <div className="w-32 h-1.5 bg-orange-500 rounded-full" />
 
-                    {/* Overlay — No gradients in light mode, just a clean darkening mask for contrast */}
-                    <div className={`absolute inset-0 transition-opacity duration-700 
-                        ${isDark ? 'bg-gradient-to-b from-black/70 via-black/50 to-[#030c13]' : 'bg-black/35'}`}
-                    />
-
-                    {/* Hero text — centered over video */}
-                    <div className="absolute inset-0 flex flex-col items-center justify-center px-6 pt-20 z-10">
-
-                        {/* Badge */}
-                        <motion.div
-                            initial={{ opacity: 0, y: -12 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8 }}
-                            className="relative overflow-hidden mb-4 inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-cyan-400/40 bg-cyan-400/10 text-cyan-300 text-[11px] font-black tracking-[0.3em] uppercase backdrop-blur-sm"
-                        >
-                            <MapPin className="w-3 h-3" />
-                            Global Infrastructure Leader
-                        </motion.div>
-
-                        {/* Heading */}
-                        <motion.h1
-                            initial={{ opacity: 0, y: 28 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.85, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
-                            className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none text-center drop-shadow-2xl"
-                        >
-                            <span className="text-white">About </span>
-                            <span className="gtext">HPE</span>
-                        </motion.h1>
-
-                        {/* Sub */}
-                        <motion.p
-                            initial={{ opacity: 0, y: 18 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8, delay: 0.26 }}
-                            className={`mt-4 text-sm md:text-base font-bold tracking-[0.5em] uppercase transition-colors duration-500
-                                ${isDark ? 'text-slate-400' : 'text-slate-600'}`}
-                        >
-                            IT Solutions
-                        </motion.p>
-                    </div>
-
-                    {/* Bottom fade — only in dark mode to blend with dark background */}
-                    {isDark && (
-                        <div className="absolute bottom-0 left-0 w-full h-32 pointer-events-none bg-gradient-to-t from-[#030c13] to-transparent" />
-                    )}
-                </section>
-
-                {/* ══════════════════════════════════════════════════════
-            MAIN CONTENT
-        ══════════════════════════════════════════════════════ */}
-                <main className="relative z-10 max-w-7xl mx-auto px-6 pb-36 pt-12">
-
-                    {/* Pillar pills */}
-                    <AnimatedSection className="flex flex-wrap justify-center gap-3 mb-14">
-                        {pillars.map((p, i) => (
-                            <motion.span key={p.label} custom={i} variants={fadeUp}
-                                whileHover={{ scale: 1.07 }}
-                                className={`flex items-center gap-2 px-4 py-2 rounded-full text-[11px] font-semibold border cursor-default transition-all duration-300
-                    ${isDark
-                                        ? 'bg-white/5 border-white/10 text-slate-300 hover:border-cyan-400/40 hover:text-cyan-300 backdrop-blur-xl'
-                                        : 'bg-white/70 border-white/70 text-slate-600 hover:border-sky-300 hover:text-sky-600 backdrop-blur-xl shadow-sm'
-                                    }`}>
-                                {p.icon}{p.label}
-                            </motion.span>
-                        ))}
-                    </AnimatedSection>
-
-                    {/* Stats row */}
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-20">
-                        {stats.map((s, i) => (
-                            <StatCard key={s.label} value={s.value} label={s.label} delay={i} isDark={isDark} />
-                        ))}
-                    </div>
-
-                    {/* ── Strategic Overview ─────────────────────────── */}
-                    <AnimatedSection className="mb-20">
-                        <div className={`group relative rounded-[2.5rem] overflow-hidden border transition-all duration-500
-              ${isDark
-                                ? 'bg-white/[0.04] border-white/10 backdrop-blur-2xl hover:border-cyan-400/25 hover:bg-white/[0.07] shadow-xl shadow-black/30'
-                                : 'bg-white/70 border-white/80 backdrop-blur-2xl hover:border-sky-200 hover:bg-white/90 shadow-xl shadow-slate-200/50'
-                            }`}>
-
-                            {/* Top shimmer line */}
-                            <div className={`absolute top-0 left-0 right-0 h-px
-                ${isDark
-                                    ? 'bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent'
-                                    : 'bg-gradient-to-r from-transparent via-sky-400/40 to-transparent'
-                                }`} />
-
-                            <div className="p-8 md:p-14 grid lg:grid-cols-5 gap-12 items-center">
-                                {/* Text */}
-                                <div className="lg:col-span-3 space-y-7">
-                                    <motion.span variants={fadeUp} initial="hidden" whileInView="visible"
-                                        viewport={{ once: true }}
-                                        className={`block text-[11px] font-black uppercase tracking-[0.5em]
-                        ${isDark ? 'text-orange-400' : 'text-orange-500'}`}>
-                                        Strategic Overview
-                                    </motion.span>
-
-                                    <motion.p variants={fadeUp} custom={1} initial="hidden" whileInView="visible"
-                                        viewport={{ once: true }}
-                                        className={`text-2xl md:text-3xl font-light leading-snug
-                        ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                                        HPE IT Solutions is a multi-vertical enterprise delivering{' '}
-                                        <span className={`font-semibold ${isDark ? 'text-cyan-400' : 'text-sky-500'}`}>structured IT services</span>{' '}
-                                        across the Indian subcontinent.
-                                    </motion.p>
-
-                                    <motion.div variants={fadeUp} custom={2} initial="hidden" whileInView="visible"
-                                        viewport={{ once: true }}
-                                        className={`space-y-4 text-sm leading-relaxed
-                        ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-                                        <p>Established through <strong className={isDark ? 'text-slate-200' : 'text-slate-800'}>70+ strategic mergers</strong>, the organization operates under a centralized governance architecture supported by decentralized field execution teams.</p>
-                                        <p>Headquartered in Hyderabad, our operational hubs in <strong className={isDark ? 'text-slate-200' : 'text-slate-800'}>Mumbai, Bangalore, Chennai, and Delhi</strong> integrate digital enterprise systems with complex infrastructure execution.</p>
-                                    </motion.div>
-                                </div>
-
-                                {/* Image */}
-                                <div className="lg:col-span-2">
-                                    <motion.div variants={scaleIn} initial="hidden" whileInView="visible"
-                                        viewport={{ once: true }}
-                                        className="relative">
-                                        <div className={`relative aspect-square rounded-3xl overflow-hidden border
-                          ${isDark ? 'border-white/10' : 'border-white/60'}`}>
-                                            <img
-                                                src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop"
-                                                alt="Global Technology Infrastructure"
-                                                className="w-full h-full object-cover grayscale hover:grayscale-0 hover:scale-105 transition-all duration-700"
-                                            />
-                                            <div className={`absolute inset-0 ${isDark ? 'bg-gradient-to-t from-[#030c13]/40 to-transparent' : 'bg-gradient-to-t from-slate-900/10 to-transparent'}`} />
-                                        </div>
-                                    </motion.div>
-                                </div>
-                            </div>
-                        </div>
-                    </AnimatedSection>
-
-                    {/* ── Capability Cards ────────────────────────────── */}
-                    <section aria-label="Capability Highlights">
-                        <AnimatedSection className="text-center mb-12">
-                            <span className={`block text-[11px] font-black uppercase tracking-[0.5em] mb-3
-                ${isDark ? 'text-cyan-400' : 'text-sky-500'}`}>
-                                Core Capabilities
-                            </span>
-                            <h2 className={`text-4xl md:text-5xl font-black uppercase tracking-tight
-                ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                                Capability{' '}
-                                <span className={isDark ? 'text-orange-400' : 'text-orange-500'}>Highlights</span>
-                            </h2>
-                            <div className="flex items-center justify-center gap-3 mt-5">
-                                <div className={`h-px w-14 rounded-full ${isDark ? 'bg-cyan-400/50' : 'bg-sky-400/50'}`} />
-                                <div className={`w-2 h-2 rounded-full ${isDark ? 'bg-orange-400' : 'bg-orange-500'}`} />
-                                <div className={`h-px w-14 rounded-full ${isDark ? 'bg-cyan-400/50' : 'bg-sky-400/50'}`} />
-                            </div>
-                        </AnimatedSection>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-                            {capabilities.map((cap, i) => (
-                                <CapabilityCard key={cap.title} {...cap} index={i} isDark={isDark} />
+                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-5xl mt-8">
+                            {stats.map((s, i) => (
+                                <StatCard key={s.label} value={s.value} label={s.label} delay={0.2 + i * 0.1} isDark={true} />
                             ))}
                         </div>
-                    </section>
+                    </motion.div>
+                </div>
+            </header>
 
-                    {/* ── CTA ─────────────────────────────────────────── */}
-                    <AnimatedSection className="mt-24 flex flex-col sm:flex-row gap-4 justify-center items-center">
-                        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
-                            <Link to="/vision-mission"
-                                className={`group inline-flex items-center gap-3 px-10 py-4 rounded-full font-black tracking-widest uppercase text-sm transition-all duration-300 shadow-xl
-                    ${isDark
-                                        ? 'bg-gradient-to-r from-cyan-400 to-blue-500 text-[#030c13] hover:shadow-cyan-500/40 hover:from-cyan-300'
-                                        : 'bg-gradient-to-r from-sky-500 to-blue-600 text-white hover:shadow-sky-400/40 hover:from-sky-400'
-                                    }`}>
-                                <span>Vision &amp; Mission</span>
-                                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1.5" />
-                            </Link>
-                        </motion.div>
+            {/* SPACER TO OFFSET FIXED HERO */}
+            <div className="h-[85vh] min-h-[750px] pt-20" />
 
-                        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
-                            <Link to="/contact"
-                                className={`group inline-flex items-center gap-3 px-10 py-4 rounded-full font-black tracking-widest uppercase text-sm transition-all duration-300 border
-                    ${isDark
-                                        ? 'border-white/15 bg-white/5 backdrop-blur-xl text-white hover:bg-white/10 hover:border-white/30'
-                                        : 'border-white/70 bg-white/60 backdrop-blur-xl text-slate-700 hover:bg-white/90 hover:border-slate-300 shadow-md'
-                                    }`}>
-                                <span>Contact Us</span>
-                                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1.5" />
-                            </Link>
-                        </motion.div>
-                    </AnimatedSection>
-                </main>
-            </article>
-        </>
+            <main className={`relative z-10 ${isDark ? 'bg-[#0a0f1e]' : 'bg-white'} space-y-28 pb-40 shadow-[0_-50px_100px_rgba(0,0,0,0.1)]`}>
+
+                {/* OVERVIEW */}
+                <section id="overview" className="px-8 md:px-16 pt-32">
+                    <div className="max-w-[1600px] mx-auto">
+                        <FadeUp>
+                            <Glass className="p-10 md:p-24" isDark={isDark}>
+                                <div className="grid lg:grid-cols-12 gap-20 items-start">
+                                    <div className="lg:col-span-4 space-y-10">
+                                        <Label text="Strategic Overview" color="text-orange-400" isDark={isDark} />
+                                        <h2 className={`text-2xl md:text-4xl font-black uppercase tracking-tight leading-[0.9] ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                                            Structured <br />
+                                            <span className={isDark ? 'text-white/40' : 'text-slate-400'}>Governance</span><br />
+                                            at Scale
+                                        </h2>
+                                        <div className="w-24 h-1 bg-gradient-to-r from-orange-400 to-blue-500 rounded-full" />
+                                        <div className="space-y-4 pt-4">
+                                            {['IT Services', 'Infrastructure Modernization', 'Workforce Enablement', 'Enterprise Governance'].map(tag => (
+                                                <div key={tag} className={`flex items-center gap-4 text-lg font-bold ${isDark ? 'text-white/70' : 'text-slate-700'}`}>
+                                                    <CheckCircle2 size={18} className={isDark ? 'text-blue-400' : 'text-blue-600'} />
+                                                    {tag}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    <FadeUp delay={0.18} className="lg:col-span-8 space-y-12">
+                                        <p className={`text-xl md:text-3xl font-black leading-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                                            HPE IT Solutions is a multi-vertical enterprise delivering structured IT services, infrastructure modernization, and workforce enablement across the Indian subcontinent.
+                                        </p>
+                                        <div className={`space-y-8 text-lg md:text-xl leading-relaxed font-medium ${isDark ? 'text-white/50' : 'text-slate-600'}`}>
+                                            <p>Formed through 70+ strategic mergers and integrations, the organization operates under a unified governance model that ensures operational consistency, financial discipline, and execution excellence across all verticals.</p>
+                                            <p>Headquartered in Hyderabad, with major operational hubs in Mumbai, Bangalore, Chennai, and Delhi, we combine centralized strategic oversight with decentralized field execution — enabling precision delivery at scale.</p>
+                                        </div>
+                                        <div className="pt-8">
+                                            <Link to="/contact"
+                                                className={`inline-flex items-center gap-4 px-12 py-6 text-[11px] font-black uppercase tracking-widest transition-all rounded-2xl border ${isDark ? 'text-white bg-white/[0.08] border-white/15 hover:bg-white/[0.15]' : 'text-slate-900 bg-slate-100 border-slate-200 hover:bg-slate-200'} shadow-2xl`}>
+                                                Request Executive Briefing
+                                                <ArrowRight size={16} className={isDark ? 'text-blue-400' : 'text-blue-600'} />
+                                            </Link>
+                                        </div>
+                                    </FadeUp>
+                                </div>
+                            </Glass>
+                        </FadeUp>
+                    </div>
+                </section>
+
+                {/* ENTERPRISE STRUCTURE */}
+                <section id="structure" className="px-8 md:px-16">
+                    <div className="max-w-[1600px] mx-auto space-y-20">
+                        <FadeUp className="text-center space-y-6">
+                            <Label text="Operational Framework" color="text-blue-400" isDark={isDark} />
+                            <h2 className={`text-3xl md:text-5xl font-black uppercase tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                                Enterprise <span className={isDark ? 'text-white/30' : 'text-slate-300'}>Architecture</span>
+                            </h2>
+                            <div className="w-32 h-1 bg-blue-600 mx-auto rounded-full" />
+                        </FadeUp>
+
+                        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                            {structure.map((s, i) => (
+                                <StructCard key={s.title} icon={s.icon} title={s.title} body={s.body} delay={i * 0.1} isDark={isDark} />
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                {/* INFRASTRUCTURE FOOTPRINT */}
+                <section id="footprint" className="px-8 md:px-16 pt-10">
+                    <div className="max-w-[1600px] mx-auto">
+                        <FadeUp>
+                            <div className="grid lg:grid-cols-2 gap-6 items-stretch">
+                                <div className={`relative overflow-hidden rounded-3xl min-h-[420px] group border transition-colors duration-500 ${isDark ? 'border-white/10' : 'border-slate-200 shadow-lg'}`}>
+                                    <img
+                                        src="/about_image1.jpg"
+                                        className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 grayscale-[0.25] group-hover:scale-105 ${isDark ? 'opacity-100' : 'opacity-90'}`}
+                                        alt="National Infrastructure"
+                                    />
+                                    <div className={`absolute inset-0 transition-colors duration-500 ${isDark ? 'bg-gradient-to-t from-[#0a0f1e]/80 via-[#0a0f1e]/10 to-transparent' : 'bg-gradient-to-t from-black/40 via-transparent to-transparent'}`} />
+                                    <div className="absolute bottom-8 left-8">
+                                        <div className={`backdrop-blur-xl border rounded-2xl px-6 py-4 transition-all duration-500 ${isDark ? 'bg-white/[0.10] border-white/15' : 'bg-white/80 border-slate-200 shadow-xl'}`}>
+                                            <div className={`text-2xl font-black ${isDark ? 'text-white' : 'text-slate-900'}`}>20+ States</div>
+                                            <div className={`text-[9px] uppercase font-black tracking-widest mt-1 ${isDark ? 'text-orange-400' : 'text-orange-600'}`}>Sovereign Delivery Footprint</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <Glass className="p-10 md:p-24 flex flex-col justify-center gap-14" isDark={isDark}>
+                                    <div className="space-y-6">
+                                        <Label text="Geographic Scale" color="text-blue-400" isDark={isDark} />
+                                        <h2 className={`text-3xl md:text-5xl font-black uppercase tracking-tight leading-[0.9] ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                                            Precision Delivery <br />
+                                            <span className={isDark ? 'text-white/35' : 'text-slate-400'}>National Footprint</span>
+                                        </h2>
+                                    </div>
+                                    <div className="space-y-8">
+                                        {footprintPoints.map((pt, i) => (
+                                            <div key={i} className="flex gap-6 group/pt">
+                                                <div className={`mt-3 w-2.5 h-2.5 rounded-full shrink-0 transition-colors ${isDark ? 'bg-orange-400 group-hover/pt:bg-blue-400' : 'bg-orange-600 group-hover/pt:bg-blue-600'}`} />
+                                                <p className={`text-xl md:text-2xl font-bold leading-relaxed ${isDark ? 'text-white/70' : 'text-slate-600'}`}>{pt}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <Link to="/strength"
+                                        className={`self-start inline-flex items-center gap-4 text-[11px] font-black uppercase tracking-widest transition-colors group/link ${isDark ? 'text-white/45 hover:text-white' : 'text-slate-400 hover:text-slate-900'}`}>
+                                        View Organisational Strength
+                                        <ArrowRight size={16} className="group-hover/link:translate-x-1 transition-transform" />
+                                    </Link>
+                                </Glass>
+                            </div>
+                        </FadeUp>
+                    </div>
+                </section>
+
+                {/* MEDIA GRID */}
+                <section id="media" className="px-8 md:px-16 pt-20">
+                    <div className="max-w-[1600px] mx-auto space-y-20">
+                        <FadeUp className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                            <div className="space-y-4">
+                                <Label text="Visual Portfolio" color="text-orange-400" isDark={isDark} />
+                                <h2 className={`text-2xl md:text-3xl font-black uppercase tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                                    Operational <span className={isDark ? 'text-white/30' : 'text-slate-300'}>Excellence</span>
+                                </h2>
+                            </div>
+                            <p className={`max-w-xs text-sm font-medium leading-relaxed ${isDark ? 'text-white/35' : 'text-slate-400'}`}>
+                                Specialist environments and field teams driving national-scale infrastructure delivery.
+                            </p>
+                        </FadeUp>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            {media.map((item, i) => (
+                                <FadeUp key={i} delay={i * 0.12}>
+                                    <div className={`group relative aspect-[4/5] rounded-3xl overflow-hidden border transition-colors duration-500 ${isDark ? 'border-white/10' : 'border-slate-200 shadow-md'}`}>
+                                        <img
+                                            src={item.src}
+                                            className={`absolute inset-0 w-full h-full object-cover grayscale-[0.15] group-hover:scale-105 transition-all duration-700 ${isDark ? 'opacity-55 group-hover:opacity-85' : 'opacity-90'}`}
+                                            alt={item.label}
+                                        />
+                                        <div className={`absolute inset-0 transition-all duration-500 ${isDark ? 'bg-gradient-to-t from-[#0a0f1e]/90 via-[#0a0f1e]/10 to-transparent' : 'bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-40 hover:opacity-10'}`} />
+                                        <div className="absolute bottom-8 left-8 space-y-2">
+                                            <p className="text-sm font-black uppercase tracking-tight text-white">{item.label}</p>
+                                            <div className={`h-0.5 rounded-full transition-all duration-500 ${isDark ? 'w-8 bg-orange-400 group-hover:w-16' : 'w-12 bg-orange-500 group-hover:w-20 shadow-lg'}`} />
+                                        </div>
+                                    </div>
+                                </FadeUp>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                {/* 100% WIDTH MINIMALIST QUOTE CTA */}
+                <section className="w-full">
+                    <FadeUp className="w-full overflow-hidden bg-[#020817] border-y border-white/5 relative">
+                        {/* Subtle background glow */}
+                        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-600/10 via-transparent to-transparent opacity-50 pointer-events-none" />
+
+                        <div className="relative z-10 py-28 md:py-36 px-8 text-center space-y-12">
+                            <h2 className="text-xl md:text-3xl lg:text-4xl font-black text-white leading-[1.1] tracking-tight uppercase max-w-6xl mx-auto">
+                                “Where technology meets execution — <br />
+                                <span className="text-white/40">let’s create impact together.”</span>
+                            </h2>
+
+                            <div className="flex justify-center">
+                                <Link to="/contact"
+                                    className="inline-flex items-center gap-4 px-12 py-5 bg-white text-black font-black uppercase tracking-[0.2em] text-[10px] rounded-full hover:bg-[#00e5ff] hover:text-black hover:scale-105 active:scale-95 transition-all duration-300 shadow-2xl shadow-blue-600/10 group">
+                                    Connect with us
+                                    <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                                </Link>
+                            </div>
+                        </div>
+                    </FadeUp>
+                </section>
+
+            </main>
+        </article>
     );
 };
 
