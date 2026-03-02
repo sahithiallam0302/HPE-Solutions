@@ -60,7 +60,7 @@ const DivisionCard = ({ title, icon: Icon, description, delay, index }) => {
                         <span className="relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-current after:transition-all after:duration-300 group-hover/btn:after:w-full">
                             Explore Division
                         </span>
-                        <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-2 transition-transform" />
+                        <HardHat className="w-4 h-4 group-hover/btn:translate-x-2 transition-transform" />
                     </button>
 
                     {/* Decorative element inside card */}
@@ -94,17 +94,16 @@ const OurDivisions = () => {
     ];
 
     return (
-        <section id="projects" className="relative bg-slate-50 dark:bg-[#011b26] py-12 px-6 md:py-16 transition-colors duration-500 overflow-hidden" aria-labelledby="divisions-heading">
+        <section id="projects" className="relative bg-slate-50 dark:bg-[#011b26] py-16 px-6 md:py-24 transition-colors duration-500 overflow-hidden" aria-labelledby="divisions-heading">
             {/* Abstract Background Elements */}
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
                 <div className="absolute -top-24 -left-24 w-96 h-96 bg-hpe-cyan/5 rounded-full blur-[120px] dark:opacity-20" />
                 <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-hpe-orange/5 rounded-full blur-[120px] dark:opacity-20" />
             </div>
 
-
             <div className="max-w-7xl mx-auto relative z-10 font-sans">
                 {/* Section Header - Centered for proper alignment */}
-                <div className="flex flex-col items-center text-center mb-8 md:mb-10 px-4">
+                <div className="flex flex-col items-center text-center mb-12 md:mb-16 px-4">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -131,8 +130,8 @@ const OurDivisions = () => {
                     </motion.div>
                 </div>
 
-                {/* Division Cards Grid - Fixed width to be not full-screen but contained */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
+                {/* Division Cards Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
                     {divisions.map((div, i) => (
                         <DivisionCard
                             key={i}
@@ -143,7 +142,7 @@ const OurDivisions = () => {
                 </div>
 
                 {/* Section Footer Decoration */}
-                <div className="mt-8 flex justify-center opacity-30">
+                <div className="mt-12 flex justify-center opacity-30">
                     <div className="flex gap-2">
                         {[1, 2, 3].map(i => (
                             <div key={i} className="w-2 h-2 rounded-full bg-slate-300 dark:bg-slate-700" />

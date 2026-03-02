@@ -1,8 +1,12 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Sun, Moon, Menu, X, ChevronDown, ArrowRight, Building2, Target, Users, LayoutGrid, Shield, Globe, Server, Package, Headphones, Activity } from 'lucide-react';
+import {
+    Sun, Moon, Menu, X, ChevronDown, ArrowRight,
+    Building2, Target, Users, LayoutGrid, Shield,
+    Globe, Server, Package, Headphones, Activity
+} from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 
 function Navbar() {
     const location = useLocation();
@@ -12,12 +16,13 @@ function Navbar() {
     const [hoveredName, setHoveredName] = useState(null);
     const [expandedAccordion, setExpandedAccordion] = useState(null);
 
-    // Close mobile menu on route change
+    // Close menus on route change
     useEffect(() => {
         setMenuOpen(false);
         setActiveMega(null);
         setExpandedAccordion(null);
         setHoveredName(null);
+        window.scrollTo(0, 0);
     }, [location.pathname]);
 
     const navLinks = [
@@ -183,7 +188,7 @@ function Navbar() {
 
     return (
         <>
-            <nav className="bg-[#011b26] border-b border-white/10 px-6 h-20 fixed w-full top-0 z-[100]">
+            <nav className="bg-[#011b26] border-b border-white/10 px-6 h-20 fixed w-full top-0 z-[100] transition-colors duration-500">
                 <div className="max-w-[1400px] mx-auto flex items-center justify-between h-full relative">
 
                     {/* Logo Section */}
@@ -191,7 +196,7 @@ function Navbar() {
                         <img
                             src="/HPE LOGO.png"
                             alt="HPE IT Solutions Logo"
-                            className="h-20 md:h-24 lg:h-32 w-auto object-contain transition-transform hover:scale-105 brightness-110"
+                            className="h-14 md:h-18 lg:h-20 w-auto object-contain transition-transform hover:scale-105 brightness-110"
                         />
                     </Link>
 
@@ -219,8 +224,8 @@ function Navbar() {
                                         <div className="relative py-1 flex items-center gap-1.5">
                                             <button
                                                 className={`flex items-center gap-1.5 text-xs font-black tracking-widest transition-colors duration-200 cursor-pointer outline-none ${isActiveItem || isInteracting
-                                                    ? 'text-[#00b0d4]'
-                                                    : 'text-white hover:text-[#00b0d4]'
+                                                        ? 'text-[#00b0d4]'
+                                                        : 'text-white hover:text-[#00b0d4]'
                                                     }`}
                                             >
                                                 {link.name}
@@ -250,8 +255,8 @@ function Navbar() {
                                         <Link
                                             to={link.path}
                                             className={`text-xs font-black tracking-widest transition-colors duration-200 ${isActiveItem || hoveredName === link.name
-                                                ? 'text-[#00b0d4]'
-                                                : 'text-white hover:text-[#00b0d4]'
+                                                    ? 'text-[#00b0d4]'
+                                                    : 'text-white hover:text-[#00b0d4]'
                                                 }`}
                                         >
                                             {link.name}
@@ -272,7 +277,6 @@ function Navbar() {
 
                     {/* Right Controls */}
                     <div className="flex items-center space-x-4">
-
                         {/* CTA (Desktop Only) */}
                         <Link
                             to="/contact"
@@ -284,7 +288,7 @@ function Navbar() {
                         {/* Theme Toggle */}
                         <button
                             onClick={toggleTheme}
-                            className="p-2.5 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-all text-white group"
+                            className="p-2.5 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-all text-white group cursor-pointer"
                             aria-label="Toggle Theme"
                         >
                             {theme === 'dark' ? (
@@ -297,7 +301,7 @@ function Navbar() {
                         {/* Mobile Menu Toggle */}
                         <button
                             onClick={() => setMenuOpen(!menuOpen)}
-                            className="lg:hidden p-2 text-white relative z-[100]"
+                            className="lg:hidden p-2 text-white relative z-[100] cursor-pointer"
                         >
                             <AnimatePresence mode="wait">
                                 {menuOpen ? (
@@ -423,11 +427,11 @@ function Navbar() {
                         animate={{ y: 0 }}
                         exit={{ y: '-100%' }}
                         transition={{ duration: 0.5, ease: [0.65, 0, 0.35, 1] }}
-                        className="fixed inset-0 z-[90] bg-[#0a0e1a] flex flex-col items-center h-screen pt-20 overflow-y-auto"
+                        className="fixed inset-0 z-[90] bg-[#011b26] flex flex-col items-center h-screen pt-20 overflow-y-auto"
                     >
                         {/* Decorative Background Elements */}
-                        <div className="absolute top-0 right-0 w-64 h-64 bg-hpe-cyan/10 blur-[100px] rounded-full pointer-events-none" />
-                        <div className="absolute bottom-0 left-0 w-64 h-64 bg-hpe-orange/10 blur-[100px] rounded-full pointer-events-none" />
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-[#00b0d4]/10 blur-[100px] rounded-full pointer-events-none" />
+                        <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#ff8d00]/10 blur-[100px] rounded-full pointer-events-none" />
 
                         <ul className="list-none flex flex-col gap-4 items-center w-full px-8 py-10 z-10">
                             {navLinks.map((nav, index) => {
@@ -439,9 +443,9 @@ function Navbar() {
                                         <li key={nav.name} className="w-full text-center">
                                             <button
                                                 onClick={() => setExpandedAccordion(isExpanded ? null : nav.name)}
-                                                className={`w-full font-orbitron font-bold text-3xl uppercase tracking-wider flex items-center justify-center gap-2 py-2 ${isActive
-                                                    ? 'text-[#00b0d4]'
-                                                    : 'text-white/60 hover:text-white transition-colors duration-300'
+                                                className={`w-full font-black text-3xl uppercase tracking-wider flex items-center justify-center gap-2 py-4 cursor-pointer ${isActive
+                                                        ? 'text-[#00b0d4]'
+                                                        : 'text-white/60 hover:text-white transition-colors duration-300'
                                                     }`}
                                             >
                                                 {nav.name}
@@ -453,10 +457,10 @@ function Navbar() {
                                                         initial={{ height: 0, opacity: 0 }}
                                                         animate={{ height: 'auto', opacity: 1 }}
                                                         exit={{ height: 0, opacity: 0 }}
-                                                        className="overflow-hidden flex flex-col gap-2 py-2"
+                                                        className="overflow-hidden flex flex-col gap-4 py-4 bg-white/5 rounded-2xl mb-4"
                                                     >
                                                         {megaContent[nav.mega].columns.map((col) => (
-                                                            <div key={col.title} className="flex flex-col gap-1">
+                                                            <div key={col.title} className="flex flex-col gap-2">
                                                                 <span className="text-[10px] font-black text-white/30 uppercase tracking-widest">{col.title}</span>
                                                                 {col.links.map((subLink) => (
                                                                     <Link
@@ -483,14 +487,14 @@ function Navbar() {
                                         initial={{ opacity: 0, scale: 0.8, y: 20 }}
                                         animate={{ opacity: 1, scale: 1, y: 0 }}
                                         transition={{ delay: 0.1 * index + 0.2 }}
-                                        className={`font-orbitron font-bold text-4xl uppercase tracking-wider text-center w-full ${isActive
-                                            ? 'text-transparent bg-clip-text bg-gradient-to-r from-hpe-cyan to-hpe-orange drop-shadow-[0_0_10px_rgba(0,229,255,0.4)]'
-                                            : 'text-white/60 hover:text-white transition-colors duration-300'
+                                        className={`font-black text-4xl uppercase tracking-wider text-center w-full ${isActive
+                                                ? 'text-[#00b0d4]'
+                                                : 'text-white/60 hover:text-white transition-colors duration-300'
                                             }`}
                                     >
                                         <Link
                                             to={nav.path}
-                                            className="block py-2 w-full text-center tracking-widest leading-none outline-none"
+                                            className="block py-4 w-full text-center tracking-widest leading-none outline-none"
                                             onClick={() => setMenuOpen(false)}
                                         >
                                             {nav.name}
@@ -504,20 +508,19 @@ function Navbar() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.8 }}
-                            className="w-full pb-16 pt-8 flex flex-col items-center gap-6 z-10 border-t border-white/10"
+                            className="w-full pb-16 pt-8 flex flex-col items-center gap-6 z-10 border-t border-white/10 mt-auto"
                         >
                             <Link
                                 to="/contact"
                                 onClick={() => setMenuOpen(false)}
-                                className="bg-[#ff8d00] hover:bg-white hover:text-[#011b26] text-white px-10 py-4 rounded-full font-black text-sm uppercase tracking-widest transition-all duration-300 shadow-xl shadow-orange-900/20 active:scale-95"
+                                className="bg-[#ff8d00] hover:bg-white hover:text-[#011b26] text-white px-12 py-5 rounded-full font-black text-sm uppercase tracking-widest transition-all duration-300 shadow-xl shadow-orange-900/20 active:scale-95"
                             >
-                                +91 40 2345 6789
+                                Get Started
                             </Link>
                         </motion.div>
                     </motion.div>
                 )}
             </AnimatePresence>
-
         </>
     );
 }

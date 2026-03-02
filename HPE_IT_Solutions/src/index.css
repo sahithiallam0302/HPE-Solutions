@@ -1,31 +1,55 @@
 @import "tailwindcss";
 
 @theme {
+  /* Site Palette */
   --color-hpe-navy: #0a0e1a;
   --color-hpe-navy-light: #12182b;
-  --color-navy-900: #011b26;
-  --color-navy-950: #0a0e1a;
   --color-hpe-cyan: #00e5ff;
   --color-hpe-cyan-dark: #008fa3;
   --color-hpe-orange: #ff6d00;
   --color-hpe-orange-dark: #cc5600;
 
-  --color-brand-orange: #ff8d00;
-  --color-brand-cyan: #00b0d4;
   --color-navy-900: #0b1220;
   --color-navy-950: #030c13;
+  --color-brand-orange: #ff8d00;
+  --color-brand-cyan: #00b0d4;
 
+  /* Typography */
+  --font-sans: "Inter", "system-ui", sans-serif;
   --font-orbitron: "Outfit", sans-serif;
   --font-rajdhani: "Space Grotesk", sans-serif;
-  --font-sans: "Inter", sans-serif;
 
+  /* Animations */
+  --animate-glow-pulse: glow-pulse 2s infinite;
+  --animate-float: float 6s ease-in-out infinite;
+
+  @keyframes glow-pulse {
+    0%, 100% { filter: drop-shadow(0 0 15px rgba(0,229,255,0.4)); }
+    50% { filter: drop-shadow(0 0 25px rgba(0,229,255,0.8)); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+}
+
+:root {
   --drop-shadow-glow-cyan: 0 0 15px rgba(0, 229, 255, 0.5);
   --drop-shadow-glow-orange: 0 0 15px rgba(255, 109, 0, 0.5);
+  color-scheme: light dark;
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: var(--font-sans);
+  }
+
   body {
-    @apply bg-slate-50 text-slate-800 font-sans selection:bg-hpe-cyan/30 overflow-x-hidden;
+    background-color: var(--color-slate-50);
+    color: var(--color-slate-800);
+    font-family: var(--font-sans);
+    @apply selection:bg-hpe-cyan/30 overflow-x-hidden;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -37,21 +61,12 @@
     @apply bg-hpe-navy text-slate-300;
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply font-orbitron font-bold text-slate-900 transition-colors duration-300;
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-orbitron);
+    @apply font-bold text-slate-900 transition-colors duration-300;
   }
 
-  .dark h1,
-  .dark h2,
-  .dark h3,
-  .dark h4,
-  .dark h5,
-  .dark h6 {
+  .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
     @apply text-white;
   }
 
@@ -64,29 +79,7 @@
   }
 }
 
-
 @variant dark (&:where(.dark, .dark *));
-
-:root {
-  color-scheme: light dark;
-}
-
-html {
-  scroll-behavior: smooth;
-  font-family: 'Outfit', 'Inter', sans-serif;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  @apply bg-[#0b1220] text-white transition-colors duration-500;
-  min-height: 100vh;
-}
-
-.dark body {
-  @apply bg-[#0b1220] text-white;
-}
 
 .dark {
   color-scheme: dark;
@@ -99,7 +92,7 @@ body {
 /* ── Enterprise Typography Scale ── */
 .text-huge {
   font-size: clamp(3rem, 7vw, 6.5rem);
-  line-height: 0.92;
+  line-height: 1;
   letter-spacing: -0.04em;
   font-weight: 900;
 }

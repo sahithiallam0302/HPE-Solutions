@@ -66,6 +66,8 @@ function AppContent() {
         </Routes>
       </main>
       <Footer />
+      <Preloader />
+      <ScrollIndicator />
     </div>
   );
 }
@@ -74,8 +76,6 @@ function App() {
   return (
     <Router>
       <ScrollToHash />
-      <Preloader />
-      <ScrollIndicator />
       <AppContent />
     </Router>
   );
