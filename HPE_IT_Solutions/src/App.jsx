@@ -20,6 +20,9 @@ import CertificationsPage from './pages/CertificationsPage';
 import Contact from './pages/Contact';
 import Preloader from './components/common/Preloader';
 import ScrollIndicator from './components/common/ScrollIndicator';
+import EnterpriseService from './components/Services/EnterpriseService';
+import InfraBrickServices from './components/Services/Infra&BrickServices';
+import WorkforceManagedServices from './components/Services/Workforce&ManagedServices';
 
 function AppContent() {
   const location = useLocation();
@@ -30,11 +33,15 @@ function AppContent() {
       '/': 'HPE IT Solutions | Enterprise Infrastructure',
       '/about': 'About Us | HPE IT Solutions',
       '/services': 'Our Services | HPE IT Solutions',
+      '/services/enterprise': 'Enterprise IT Services | HPE IT Solutions',
+      '/services/infrastructure': 'Infrastructure & Brick Services | HPE IT Solutions',
+      '/services/workforce': 'Workforce & Managed Services | HPE IT Solutions',
       '/projects': 'Project Portfolio | HPE IT Solutions',
       '/certifications': 'Certifications | HPE IT Solutions',
       '/contact': 'Contact Us | HPE IT Solutions',
     };
     document.title = titleMap[location.pathname] || 'HPE IT Solutions';
+    window.scrollTo(0, 0);
   }, [location]);
 
   return (
@@ -44,13 +51,27 @@ function AppContent() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
+          <Route path="/vision-mission" element={<VisionMission />} />
+          <Route path="/strength" element={<Strength />} />
+          <Route path="/corporate-structure" element={<CorporateStructure />} />
           <Route path="/services" element={<ServicesPage />} />
+          <Route path="/services/enterprise" element={<EnterpriseService />} />
+          <Route path="/services/infrastructure" element={<InfraBrickServices />} />
+          <Route path="/services/workforce" element={<WorkforceManagedServices />} />
           <Route path="/projects" element={<ProjectsPage />} />
+          <Route path="/projects/group-1" element={<ProjectsGroup1 />} />
+          <Route path="/projects/group-2" element={<ProjectsGroup2 />} />
+          <Route path="/projects/group-3" element={<ProjectsGroup3 />} />
+          <Route path="/projects/major" element={<MajorProjects />} />
+          <Route path="/projects/mid" element={<MidProjects />} />
+          <Route path="/projects/large" element={<LargeProjects />} />
           <Route path="/certifications" element={<CertificationsPage />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </main>
       <Footer />
+      <Preloader />
+      <ScrollIndicator />
     </div>
   );
 }
@@ -59,31 +80,6 @@ function App() {
   return (
     <Router>
       <ScrollToHash />
-      <div className="min-h-screen bg-slate-50 dark:bg-[#011b26] flex flex-col transition-colors duration-300">
-        <Navbar />
-        <main className="flex-grow">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/vision-mission" element={<VisionMission />} />
-            <Route path="/strength" element={<Strength />} />
-            <Route path="/corporate-structure" element={<CorporateStructure />} />
-            <Route path="/services" element={<ServicesPage />} />
-            <Route path="/projects" element={<ProjectsPage />} />
-            <Route path="/projects/group-1" element={<ProjectsGroup1 />} />
-            <Route path="/projects/group-2" element={<ProjectsGroup2 />} />
-            <Route path="/projects/group-3" element={<ProjectsGroup3 />} />
-            <Route path="/projects/major" element={<MajorProjects />} />
-            <Route path="/projects/mid" element={<MidProjects />} />
-            <Route path="/projects/large" element={<LargeProjects />} />
-            <Route path="/certifications" element={<CertificationsPage />} />
-            <Route path="/contact" element={<Contact />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
-      <Preloader />
-      <ScrollIndicator />
       <AppContent />
     </Router>
   );

@@ -69,34 +69,32 @@ function Navbar() {
         },
         services: {
             intro: {
-                title: "Expert IT Services",
-                desc: "Empowering enterprises with cutting-edge technology solutions, from infrastructure setup to fully managed IT support.",
-                cta: "Explore All Services",
+                title: "Strategic Service Divisions",
+                desc: "HPE IT Solutions operates across three specialized divisions, providing integrated technology and infrastructure excellence at national scale.",
+                cta: "Strategic Overview",
                 path: "/services"
             },
             columns: [
                 {
-                    title: "Infrastructure & Cloud",
+                    title: "Core Divisions",
                     links: [
-                        { name: "Data Center Solutions", path: "/services#data-center", icon: <Server className="w-4 h-4" /> },
-                        { name: "Cloud Management", path: "/services#cloud", icon: <Globe className="w-4 h-4" /> },
-                        { name: "Network Infrastructure", path: "/services#networking", icon: <Activity className="w-4 h-4" /> },
-                        { name: "Storage & Servers", path: "/services#storage", icon: <Package className="w-4 h-4" /> },
+                        { name: "Enterprise IT Services", path: "/services/enterprise", icon: <Server className="w-4 h-4" /> },
+                        { name: "Infrastructure & Brick Services", path: "/services/infrastructure", icon: <Building2 className="w-4 h-4" /> },
+                        { name: "Workforce & Managed Services", path: "/services/workforce", icon: <Users className="w-4 h-4" /> },
                     ]
                 },
                 {
-                    title: "Managed & Support",
+                    title: "Service Excellence",
                     links: [
-                        { name: "24/7 Technical Support", path: "/services#support", icon: <Headphones className="w-4 h-4" /> },
+                        { name: "National Support Network", path: "/services#support", icon: <Headphones className="w-4 h-4" /> },
                         { name: "Annual Maintenance (AMC)", path: "/services#amc", icon: <Shield className="w-4 h-4" /> },
-                        { name: "IT Consulting", path: "/services#consulting", icon: <Users className="w-4 h-4" /> },
-                        { name: "Facility Management", path: "/services#fms", icon: <Building2 className="w-4 h-4" /> },
+                        { name: "Consulting & Strategy", path: "/services#consulting", icon: <Activity className="w-4 h-4" /> },
                     ]
                 }
             ],
             featured: {
-                title: "Digital Transformation",
-                label: "Modern Solutions",
+                title: "Nationwide Delivery",
+                label: "Operational Excellence",
                 image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop"
             }
         },
