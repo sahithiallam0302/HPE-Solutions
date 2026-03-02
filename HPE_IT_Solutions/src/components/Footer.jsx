@@ -36,7 +36,7 @@ function Footer() {
                             <span className="absolute -bottom-2 left-0 w-8 h-0.5 bg-brand-orange"></span>
                         </h4>
                         <ul className="space-y-4">
-                            {['HOME', 'ABOUT', 'SERVICES', 'PROJECTS', 'CONTACT'].map((link) => (
+                            {['HOME', 'ABOUT', 'SERVICES', 'PROJECTS', 'CERTIFICATIONS', 'CONTACT'].map((link) => (
                                 <li key={link}>
                                     <Link
                                         to={link === 'HOME' ? '/' : `/${link.toLowerCase()}`}
