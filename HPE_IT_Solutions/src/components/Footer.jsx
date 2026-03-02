@@ -5,7 +5,7 @@ function Footer() {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer className="bg-navy-950 border-t border-white/5 pt-20 pb-10">
+        <footer className="relative z-10 bg-white dark:bg-[#0a0f1e] text-slate-900 dark:text-white border-t border-slate-200 dark:border-white/5 pt-24 pb-12 shadow-[0_-20px_50px_rgba(0,0,0,0.05)] dark:shadow-[0_-20px_50px_rgba(0,0,0,0.2)]">
             <div className="max-w-[1400px] mx-auto px-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20">
                     {/* Brand Info */}
@@ -17,7 +17,7 @@ function Footer() {
                                 <span className="text-brand-orange font-bold text-[8px] tracking-widest uppercase">IT SOLUTIONS</span>
                             </div>
                         </Link>
-                        <p className="text-gray-400 text-sm leading-relaxed max-w-sm">
+                        <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed max-w-sm">
                             At HPE IT Solutions, we empower businesses with cutting-edge technology and innovative digital strategies. Leading the future of enterprise excellence with dedication.
                         </p>
                         <div className="flex space-x-5">
@@ -99,8 +99,8 @@ function Footer() {
                 </div>
 
                 {/* Bottom Bar */}
-                <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
-                    <p className="text-gray-600 text-[10px] font-bold tracking-[0.2em] uppercase">
+                <div className="pt-10 border-t border-slate-200 dark:border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
+                    <p className="text-slate-400 dark:text-gray-600 text-[10px] font-bold tracking-[0.2em] uppercase">
                         © {currentYear} HPE IT SOLUTIONS PVT LTD. ALL RIGHTS RESERVED.
                     </p>
                     <div className="flex space-x-10">

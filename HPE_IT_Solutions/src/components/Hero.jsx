@@ -74,6 +74,7 @@ function Hero() {
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8 }}
+                            className="text-4xl md:text-6xl font-black text-[#011b26] dark:text-white mb-4 tracking-tighter uppercase leading-none"
                             className="text-4xl md:text-8xl font-black text-[#011b26] dark:text-white mb-4 tracking-tighter uppercase leading-none"
                         >
                             HPE IT <span className="text-brand-orange">Solutions</span>
@@ -85,7 +86,7 @@ function Hero() {
                             transition={{ delay: 0.3, duration: 0.8 }}
                             className="flex flex-col items-center"
                         >
-                            <h2 className="text-xl md:text-3xl font-bold text-slate-700 dark:text-slate-300 mb-6 max-w-3xl transition-colors">
+                            <h2 className="text-lg md:text-2xl font-bold text-slate-700 dark:text-slate-300 mb-6 max-w-3xl transition-colors">
                                 Enterprise IT & Non-IT Infrastructure Services
                             </h2>
 
