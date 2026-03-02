@@ -1,23 +1,23 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
+import { useNavigate } from 'react-router-dom';
 
 function Hero() {
+    const navigate = useNavigate();
     const containerRef = useRef(null);
     const { scrollYProgress } = useScroll({
         target: containerRef,
         offset: ["start start", "end end"]
     });
 
+    // ... (rest of the hooks remain the same)
     // Transforms for the front cover slide-up effect
-    // We start sliding up slowly and fading out precisely to prevent empty gaps
     const frontY = useTransform(scrollYProgress, [0, 0.6], ["0%", "-100%"]);
     const frontOpacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
 
     // Transforms for the inside cover content
-    // Starts scaling up exactly as the front cover begins to fade
     const insideScale = useTransform(scrollYProgress, [0.1, 0.6], [0.95, 1]);
     const insideOpacity = useTransform(scrollYProgress, [0.1, 0.5], [0, 1]);
-    // Tiny subtle Y shift for the inside cover to make it feel alive
     const insideY = useTransform(scrollYProgress, [0.1, 0.6], [50, 0]);
 
     return (
@@ -29,7 +29,6 @@ function Hero() {
             <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden">
 
                 {/* --- INSIDE COVER (Background Layer) --- */}
-                {/* Placed correctly in DOM order to sit beneath the front cover */}
                 <motion.div
                     style={{
                         scale: insideScale,
@@ -61,7 +60,6 @@ function Hero() {
                         </div>
                     </div>
 
-                    {/* Decorative Elements for Premium Feel */}
                     <div className="absolute top-1/4 -right-20 w-80 h-80 bg-brand-orange/10 rounded-full blur-[100px] pointer-events-none" />
                     <div className="absolute bottom-1/4 -left-20 w-80 h-80 bg-blue-500/10 rounded-full blur-[100px] pointer-events-none" />
                 </motion.div>
@@ -76,7 +74,7 @@ function Hero() {
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8 }}
-                            className="text-5xl md:text-8xl font-black text-[#011b26] dark:text-white mb-4 tracking-tighter uppercase leading-none"
+                            className="text-4xl md:text-8xl font-black text-[#011b26] dark:text-white mb-4 tracking-tighter uppercase leading-none"
                         >
                             HPE IT <span className="text-brand-orange">Solutions</span>
                         </motion.h1>
@@ -95,29 +93,51 @@ function Hero() {
                                 Brick-Oriented Project Execution | Pan-India Operations | 70+ Strategic Mergers
                             </p>
 
-                            <div className="flex flex-col sm:flex-row gap-4 mb-12">
+                            <div className="flex flex-col sm:flex-row gap-6 mb-12">
                                 <motion.button
-                                    whileHover={{ scale: 1.05 }}
+                                    whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(255,141,0,0.6)" }}
                                     whileTap={{ scale: 0.95 }}
-                                    className="bg-[#011b26] dark:bg-white text-white dark:text-[#011b26] px-10 py-4 rounded-full font-bold transition-all shadow-xl cursor-pointer"
+                                    onClick={() => navigate('/contact')}
+                                    className="bg-brand-orange text-white px-12 py-5 rounded-full font-black text-sm uppercase tracking-widest shadow-[0_0_15px_rgba(255,141,0,0.3)] transition-all cursor-pointer"
                                 >
                                     Contact Us
                                 </motion.button>
                                 <motion.button
-                                    whileHover={{ scale: 1.05 }}
+                                    whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(0,176,212,0.4)" }}
                                     whileTap={{ scale: 0.95 }}
-                                    className="border-2 border-[#011b26]/10 dark:border-white/10 text-[#011b26] dark:text-white px-10 py-4 rounded-full font-bold hover:bg-slate-50 dark:hover:bg-white/5 transition-colors cursor-pointer"
+                                    onClick={() => navigate('/projects')}
+                                    className="bg-transparent border-2 border-brand-cyan text-brand-cyan px-12 py-5 rounded-full font-black text-sm uppercase tracking-widest transition-all cursor-pointer"
                                 >
                                     Our Projects
                                 </motion.button>
                             </div>
 
-                            <div className="flex flex-col items-center gap-2">
-                                <div className="h-12 w-[1.5px] bg-gradient-to-b from-brand-orange to-transparent animate-bounce opacity-40" />
-                                <span className="text-[10px] uppercase tracking-[0.4em] text-slate-400 font-bold">Scroll Down</span>
-                            </div>
+                            {/* Removed old position indicator */}
                         </motion.div>
                     </div>
+
+                    {/* Scroll Indicator (Inside Front Cover) */}
+                    <motion.div
+                        animate={{ y: [0, 10, 0] }}
+                        transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer z-30 group"
+                        onClick={() =>
+                            document
+                                .getElementById('stats')
+                                ?.scrollIntoView({ behavior: 'smooth' })
+                        }
+                    >
+                        <span className="text-slate-400 dark:text-white/40 font-rajdhani tracking-[0.4em] text-[10px] font-black group-hover:text-brand-orange transition-colors">
+                            SCROLL DOWN
+                        </span>
+                        <div className="w-6 h-10 border-2 border-slate-200 dark:border-white/20 rounded-full flex justify-center p-1 group-hover:border-brand-orange/50 transition-colors">
+                            <motion.div
+                                animate={{ y: [0, 16, 0] }}
+                                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                                className="w-1 h-3 bg-brand-orange rounded-full"
+                            />
+                        </div>
+                    </motion.div>
                 </motion.div>
 
             </div>

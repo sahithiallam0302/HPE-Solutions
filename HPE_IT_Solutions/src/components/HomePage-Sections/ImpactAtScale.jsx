@@ -68,7 +68,7 @@ const ImpactAtScale = () => {
     ];
 
     return (
-        <section className="bg-white dark:bg-[#011b26] py-12 px-6 min-h-[50vh] flex items-center transition-colors duration-300" aria-labelledby="impact-heading">
+        <section id="stats" className="bg-white dark:bg-[#011b26] py-12 px-6 min-h-[50vh] flex items-center transition-colors duration-300" aria-labelledby="impact-heading">
             <div className="max-w-7xl mx-auto w-full">
 
                 {/* Header */}
