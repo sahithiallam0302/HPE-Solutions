@@ -15,8 +15,6 @@
 
   --color-navy-900: #0b1220;
   --color-navy-950: #030c13;
-}
-
   --font-orbitron: "Outfit", sans-serif;
   --font-rajdhani: "Space Grotesk", sans-serif;
   --font-sans: "Inter", sans-serif;
@@ -40,6 +38,7 @@ body {
 
 .dark body {
   @apply bg-[#0b1220] text-white;
+}
 
 @layer base {
   body {
@@ -107,6 +106,7 @@ body {
   transform: translateY(40px);
   transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
+
 .reveal-up.is-visible {
   opacity: 1;
   transform: translateY(0);

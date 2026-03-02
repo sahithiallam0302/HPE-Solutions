@@ -109,7 +109,6 @@ const Certifications = () => {
                     <span className="text-brand-orange text-xs font-black tracking-[0.4em] uppercase mb-4 block">
                         QUALITY ASSURANCE
                     </span>
-                    <h2 id="certs-heading" className="text-2xl md:text-3xl font-black text-[#011b26] dark:text-white mb-4">
                     <h2 id="certs-heading" className="text-4xl md:text-5xl font-black text-[#011b26] dark:text-white mb-6 tracking-tight">
                         Certifications & Standards
                     </h2>

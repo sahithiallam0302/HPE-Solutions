@@ -28,8 +28,8 @@ const AboutUsSection = () => {
     return (
         <section className="relative bg-white dark:bg-[#011b26] py-12 px-6 md:py-16 transition-colors duration-500 overflow-hidden" aria-labelledby="about-heading">
 
-                {/* RIGHT SIDE: Text Content */}
-                <div className="flex flex-col space-y-6">
+            {/* RIGHT SIDE: Text Content */}
+            {/* <div className="flex flex-col space-y-6">
                     <div>
                         <span className="text-brand-orange text-xs md:text-sm font-black tracking-[0.3em] uppercase mb-4 block">
                             ABOUT US
@@ -59,8 +59,8 @@ const AboutUsSection = () => {
                             <span>Read More</span>
                             <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-2" />
                         </button>
-                    </div>
-                </div>
+                    </div> 
+                </div>*/}
             {/* Abstract Background Glows */}
             <div className="absolute top-0 right-0 w-full h-full overflow-hidden pointer-events-none z-0">
                 <div className="absolute top-1/4 -right-20 w-96 h-96 bg-hpe-cyan/5 rounded-full blur-[120px] dark:opacity-20" />
