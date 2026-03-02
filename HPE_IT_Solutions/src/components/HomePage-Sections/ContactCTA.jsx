@@ -1,9 +1,11 @@
 import React from 'react';
 import { MapPin, Phone, Mail, ArrowRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const ContactCTA = () => {
+    const navigate = useNavigate();
     return (
-        <section className="bg-slate-50 dark:bg-[#011b26] py-12 px-6 min-h-[45vh] flex items-center relative overflow-hidden text-slate-900 dark:text-white transition-colors duration-500" aria-labelledby="contact-heading">
+        <section id="contact" className="bg-slate-50 dark:bg-[#011b26] py-12 px-6 min-h-[45vh] flex items-center relative overflow-hidden text-slate-900 dark:text-white transition-colors duration-500" aria-labelledby="contact-heading">
             {/* Background Accent */}
             <div className="absolute top-0 right-0 w-full h-full opacity-10 pointer-events-none">
                 <div className="absolute -top-20 -right-20 w-[600px] h-[600px] bg-[#00b0d4] rounded-full blur-[150px]" />
@@ -24,7 +26,9 @@ const ContactCTA = () => {
                             Let us help you build the digital infrastructure your business needs.
                             Reach out for a expert consultation.
                         </p>
-                        <button className="bg-brand-orange hover:bg-white hover:text-[#011b26] text-white px-8 py-4 rounded-full font-black text-sm uppercase tracking-widest transition-all duration-300 flex items-center group cursor-pointer shadow-xl shadow-orange-900/20">
+                        <button className="bg-brand-orange hover:bg-white hover:text-[#011b26] text-white px-8 py-4 rounded-full font-black text-sm uppercase tracking-widest transition-all duration-300 flex items-center group cursor-pointer shadow-xl shadow-orange-900/20"
+                            onClick={() => navigate('/contact')}
+                        >
                             Contact Us
                             <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                         </button>

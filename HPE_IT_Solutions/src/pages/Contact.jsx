@@ -4,12 +4,12 @@ import { Mail, Phone, MapPin, Send } from 'lucide-react';
 const Contact = () => {
     return (
         <div className="max-w-7xl mx-auto px-6 py-20">
-            <h1 className="text-5xl font-black text-[#011b26] mb-12 uppercase">Contact Us</h1>
+            <h1 className="text-3xl font-black text-[#011b26] mb-12 uppercase">Contact Us</h1>
 
             <div className="grid lg:grid-cols-3 gap-16">
                 <div className="lg:col-span-1 space-y-12">
                     <div className="space-y-6">
-                        <h2 className="text-2xl font-black text-brand-orange uppercase tracking-wider">Get in Touch</h2>
+                        <h2 className="text-xl font-black text-brand-orange uppercase tracking-wider">Get in Touch</h2>
                         <p className="text-slate-600 text-lg">We're here to help and answer any questions you might have. We look forward to hearing from you.</p>
                     </div>
 
