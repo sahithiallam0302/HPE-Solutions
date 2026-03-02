@@ -217,7 +217,8 @@ function Navbar() {
                                         }}
                                     >
                                         <div className="relative py-1 flex items-center gap-1.5">
-                                            <button
+                                            <Link
+                                                to={link.path}
                                                 className={`flex items-center gap-1.5 text-xs font-black tracking-widest transition-colors duration-200 cursor-pointer outline-none ${isActiveItem || isInteracting
                                                     ? 'text-[#00b0d4]'
                                                     : 'text-white hover:text-[#00b0d4]'
@@ -225,7 +226,7 @@ function Navbar() {
                                             >
                                                 {link.name}
                                                 <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${activeMega === link.mega ? 'rotate-180' : ''}`} />
-                                            </button>
+                                            </Link>
                                             {showLine && (
                                                 <motion.div
                                                     layoutId="nav-underline"
