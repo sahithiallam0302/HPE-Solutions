@@ -1,6 +1,5 @@
 import React from 'react';
-import { motion, useScroll, useSpring } from 'motion/react';
-
+import { motion, useScroll, useSpring } from "framer-motion";
 const ScrollIndicator = () => {
     const { scrollYProgress } = useScroll();
     const scaleX = useSpring(scrollYProgress, {

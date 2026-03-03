@@ -1,8 +1,8 @@
 import { Link, useLocation } from 'react-router-dom';
 import {
     Sun, Moon, Menu, X, ChevronDown, ArrowRight,
-    Building2, Target, Users, LayoutGrid, Shield,
-    Globe, Server, Package, Headphones, Activity
+    Building2, Users, LayoutGrid, Shield,
+    Headphones, Activity
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
@@ -16,21 +16,32 @@ function Navbar() {
     const [hoveredName, setHoveredName] = useState(null);
     const [expandedAccordion, setExpandedAccordion] = useState(null);
 
-    // Close menus on route change
+    // Close menus on route change & handle scroll to hash
     useEffect(() => {
         setMenuOpen(false);
         setActiveMega(null);
         setExpandedAccordion(null);
         setHoveredName(null);
-        window.scrollTo(0, 0);
-    }, [location.pathname]);
+
+        if (location.hash) {
+            const id = location.hash.replace('#', '');
+            setTimeout(() => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 100);
+        } else {
+            window.scrollTo(0, 0);
+        }
+    }, [location.pathname, location.hash]);
 
     const navLinks = [
         { name: 'HOME', path: '/' },
         { name: 'ABOUT', path: '/about', mega: 'about' },
         { name: 'SERVICES', path: '/services', mega: 'services' },
         { name: 'PROJECTS', path: '/projects', mega: 'projects' },
-        { name: 'CERTIFICATIONS', path: '/certifications', mega: 'certifications' },
+        { name: 'CERTIFICATIONS', path: '/certifications' },
         { name: 'CONTACT', path: '/contact' },
     ];
 
@@ -45,59 +56,55 @@ function Navbar() {
             columns: [
                 {
                     title: "Strategy & Purpose",
+                    path: "/about#overview",
                     links: [
-                        { name: "Company Overview", path: "/about#overview", icon: <Building2 className="w-4 h-4" /> },
-                        { name: "Vision & Mission", path: "/vision-mission", icon: <Target className="w-4 h-4" /> },
-                        { name: "Organizational Strength", path: "/strength", icon: <Users className="w-4 h-4" /> },
-                        { name: "Corporate Structure", path: "/corporate-structure#org-chart", icon: <LayoutGrid className="w-4 h-4" /> },
+                        { name: "Company Overview", path: "/about#overview" },
+                        { name: "Vision & Mission", path: "/vision-mission" },
+                        { name: "Organizational Strength", path: "/strength" },
+                        { name: "Corporate Structure", path: "/corporate-structure#org-chart" },
                     ]
                 },
                 {
                     title: "Governance & Operations",
+                    path: "/corporate-structure#governance-model",
                     links: [
-                        { name: "Governance Model", path: "/corporate-structure#governance-model", icon: <Shield className="w-4 h-4" /> },
-                        { name: "Executive Leadership", path: "/corporate-structure#executive-leadership", icon: <Users className="w-4 h-4" /> },
-                        { name: "National Footprint", path: "/about#footprint", icon: <Globe className="w-4 h-4" /> },
+                        { name: "Governance Model", path: "/corporate-structure#governance-model" },
+                        { name: "Executive Leadership", path: "/corporate-structure#executive-leadership" },
+                        { name: "National Footprint", path: "/about#footprint" },
                     ]
                 }
-            ],
-            featured: {
-                title: "Cinematic Reel",
-                label: "The Scale of Impact",
-                image: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069&auto=format&fit=crop"
-            }
+            ]
         },
         services: {
             intro: {
-                title: "Expert IT Services",
-                desc: "Empowering enterprises with cutting-edge technology solutions, from infrastructure setup to fully managed IT support.",
-                cta: "Explore All Services",
+                title: "Strategic Service Divisions",
+                desc: "HPE IT Solutions operates across three specialized divisions, providing integrated technology and infrastructure excellence at national scale.",
+                cta: "Strategic Overview",
                 path: "/services"
             },
             columns: [
                 {
-                    title: "Infrastructure & Cloud",
+                    title: "Core Divisions",
                     links: [
-                        { name: "Data Center Solutions", path: "/services#data-center", icon: <Server className="w-4 h-4" /> },
-                        { name: "Cloud Management", path: "/services#cloud", icon: <Globe className="w-4 h-4" /> },
-                        { name: "Network Infrastructure", path: "/services#networking", icon: <Activity className="w-4 h-4" /> },
-                        { name: "Storage & Servers", path: "/services#storage", icon: <Package className="w-4 h-4" /> },
+                        { name: "Enterprise IT Services", path: "/services/enterprise", icon: <LayoutGrid className="w-3.5 h-3.5" /> },
+                        { name: "Infrastructure & Brick Services", path: "/services/infrastructure", icon: <Building2 className="w-3.5 h-3.5" /> },
+                        { name: "Workforce & Managed Services", path: "/services/workforce", icon: <Users className="w-3.5 h-3.5" /> },
                     ]
                 },
                 {
-                    title: "Managed & Support",
+                    title: "Service Excellence",
                     links: [
-                        { name: "24/7 Technical Support", path: "/services#support", icon: <Headphones className="w-4 h-4" /> },
-                        { name: "Annual Maintenance (AMC)", path: "/services#amc", icon: <Shield className="w-4 h-4" /> },
-                        { name: "IT Consulting", path: "/services#consulting", icon: <Users className="w-4 h-4" /> },
-                        { name: "Facility Management", path: "/services#fms", icon: <Building2 className="w-4 h-4" /> },
+                        { name: "National Support Network", path: "/services#support", icon: <Headphones className="w-3.5 h-3.5" /> },
+                        { name: "Annual Maintenance (AMC)", path: "/services#amc", icon: <Shield className="w-3.5 h-3.5" /> },
+                        { name: "Consulting & Strategy", path: "/services#consulting", icon: <Activity className="w-3.5 h-3.5" /> },
                     ]
                 }
             ],
             featured: {
-                title: "Digital Transformation",
-                label: "Modern Solutions",
-                image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop"
+                title: "Nationwide Delivery",
+                label: "Operational Excellence",
+                image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop",
+                path: "/services"
             }
         },
         projects: {
@@ -109,94 +116,60 @@ function Navbar() {
             },
             columns: [
                 {
-                    title: "Portfolio Strategy",
-                    links: [
-                        { name: "Portfolio Overview", path: "/projects" },
-                    ]
-                },
-                {
-                    title: "Leading Case Studies",
+                    title: "Case Deep-Dives (Group 1)",
+                    path: "/projects/group-1",
                     links: [
                         { name: "Real Estate ERP Implementation", path: "/projects/group-1#project-1" },
                         { name: "SmartSite Monitoring System", path: "/projects/group-1#project-2" },
                         { name: "Govt. Infrastructure Digitization", path: "/projects/group-1#project-3" },
-                        { name: "Enterprise Vendor Automation", path: "/projects/group-2#project-4" },
                     ]
                 },
                 {
-                    title: "National Infrastructure",
+                    title: "Operational Systems (Group 2)",
+                    path: "/projects/group-2",
                     links: [
-                        { name: "Warehouse & Logistics Automation", path: "/projects/group-3#project-8" },
-                        { name: "Corporate IT Infrastructure Setup", path: "/projects/group-3#project-9" },
+                        { name: "Vendor Automation Platform", path: "/projects/group-2#project-4" },
+                        { name: "Workforce Deployment Project", path: "/projects/group-2#project-5" },
+                        { name: "Cost Control & Billing", path: "/projects/group-2#project-6" },
+                        { name: "Housing Project Management", path: "/projects/group-2#project-7" },
+                    ]
+                },
+                {
+                    title: "National Infrastructure (Group 3)",
+                    path: "/projects/group-3",
+                    links: [
+                        { name: "Warehouse & Logistics", path: "/projects/group-3#project-8" },
+                        { name: "Corporate IT Setup", path: "/projects/group-3#project-9" },
                         { name: "Pan-India AMC & Support", path: "/projects/group-3#project-10" },
-                        { name: "Global Delivery Model", path: "/projects" },
                     ]
                 }
-            ],
-            featured: {
-                title: "Nationwide Impact",
-                label: "Featured Project",
-                image: "/data_center_infrastructure.jpg"
-            }
+            ]
         },
-        certifications: {
-            intro: {
-                title: "Quality & Excellence",
-                desc: "Our commitment to international standards and industry-leading certifications ensures the highest level of service delivery.",
-                cta: "Our Standards",
-                path: "/certifications"
-            },
-            columns: [
-                {
-                    title: "ISO Standards",
-                    links: [
-                        { name: "ISO 9001:2015 (QMS)", path: "/certifications#iso-9001", icon: <Shield className="w-4 h-4" /> },
-                        { name: "ISO 27001 (ISMS)", path: "/certifications#iso-27001", icon: <Shield className="w-4 h-4" /> },
-                        { name: "ISO 20000-1 (ITSMS)", path: "/certifications#iso-20000", icon: <Shield className="w-4 h-4" /> },
-                    ]
-                },
-                {
-                    title: "Industry Partnerships",
-                    links: [
-                        { name: "Gold Partner Status", path: "/certifications#partners", icon: <Target className="w-4 h-4" /> },
-                        { name: "Authorized Service Provider", path: "/certifications#service", icon: <Building2 className="w-4 h-4" /> },
-                        { name: "Environmental Policy", path: "/certifications#policy", icon: <Globe className="w-4 h-4" /> },
-                    ]
-                }
-            ],
-            featured: {
-                title: "Industry Accredited",
-                label: "Global Recognition",
-                image: "https://images.unsplash.com/photo-1589330694653-9ecf745df605?q=80&w=2070&auto=format&fit=crop"
-            }
-        }
     };
 
     const isAboutActive = location.pathname.startsWith('/about') ||
         ['/vision-mission', '/strength', '/corporate-structure'].includes(location.pathname);
     const isProjectsActive = location.pathname.startsWith('/projects');
     const isServicesActive = location.pathname.startsWith('/services');
-    const isCertificationsActive = location.pathname.startsWith('/certifications');
 
     const isMegaActive = (megaKey) => {
         if (megaKey === 'about') return isAboutActive;
         if (megaKey === 'projects') return isProjectsActive;
         if (megaKey === 'services') return isServicesActive;
-        if (megaKey === 'certifications') return isCertificationsActive;
         return false;
     };
 
     return (
         <>
-            <nav className="bg-[#011b26] border-b border-white/10 px-6 h-20 fixed w-full top-0 z-[100] transition-colors duration-500">
+            <nav className="bg-[#011b26] border-b border-white/10 px-6 h-20 fixed w-full top-0 z-[9999] transition-colors duration-500">
                 <div className="max-w-[1400px] mx-auto flex items-center justify-between h-full relative">
 
                     {/* Logo Section */}
-                    <Link to="/" className="relative flex items-center h-full">
+                    <Link to="/" className="flex items-center h-full group overflow-hidden">
                         <img
                             src="/HPE LOGO.png"
-                            alt="HPE IT Solutions Logo"
-                            className="h-14 md:h-18 lg:h-20 w-auto object-contain transition-transform hover:scale-105 brightness-110"
+                            alt="HPE IT Solutions"
+                            className="h-full scale-125 w-auto object-contain transition-all duration-300 group-hover:scale-135 group-hover:brightness-110"
                         />
                     </Link>
 
@@ -207,59 +180,31 @@ function Navbar() {
                             const isInteracting = (hoveredName === link.name) || (link.mega && activeMega === link.mega);
                             const showLine = isInteracting || (isActiveItem && !hoveredName && !activeMega);
 
-                            if (link.mega) {
-                                return (
-                                    <li
-                                        key={link.name}
-                                        className="h-full flex items-center group"
-                                        onMouseEnter={() => {
-                                            setActiveMega(link.mega);
-                                            setHoveredName(link.name);
-                                        }}
-                                        onMouseLeave={() => {
-                                            setActiveMega(null);
-                                            setHoveredName(null);
-                                        }}
-                                    >
-                                        <div className="relative py-1 flex items-center gap-1.5">
-                                            <button
-                                                className={`flex items-center gap-1.5 text-xs font-black tracking-widest transition-colors duration-200 cursor-pointer outline-none ${isActiveItem || isInteracting
-                                                        ? 'text-[#00b0d4]'
-                                                        : 'text-white hover:text-[#00b0d4]'
-                                                    }`}
-                                            >
-                                                {link.name}
-                                                <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${activeMega === link.mega ? 'rotate-180' : ''}`} />
-                                            </button>
-                                            {showLine && (
-                                                <motion.div
-                                                    layoutId="nav-underline"
-                                                    initial={false}
-                                                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                                                    className="absolute -bottom-0.5 left-0 w-full h-[2px] bg-[#ff8d00] shadow-[0_0_8px_rgba(255,141,0,0.5)] z-10"
-                                                />
-                                            )}
-                                        </div>
-                                    </li>
-                                );
-                            }
-
                             return (
                                 <li
                                     key={link.name}
                                     className="h-full flex items-center group"
-                                    onMouseEnter={() => setHoveredName(link.name)}
-                                    onMouseLeave={() => setHoveredName(null)}
+                                    onMouseEnter={() => {
+                                        if (link.mega) setActiveMega(link.mega);
+                                        setHoveredName(link.name);
+                                    }}
+                                    onMouseLeave={() => {
+                                        setActiveMega(null);
+                                        setHoveredName(null);
+                                    }}
                                 >
-                                    <div className="relative py-1">
+                                    <div className="relative py-1 flex items-center gap-1.5">
                                         <Link
                                             to={link.path}
-                                            className={`text-xs font-black tracking-widest transition-colors duration-200 ${isActiveItem || hoveredName === link.name
-                                                    ? 'text-[#00b0d4]'
-                                                    : 'text-white hover:text-[#00b0d4]'
+                                            className={`flex items-center gap-1.5 text-xs font-black tracking-widest transition-colors duration-200 cursor-pointer outline-none ${isActiveItem || isInteracting
+                                                ? 'text-[#00b0d4]'
+                                                : 'text-white hover:text-[#00b0d4]'
                                                 }`}
                                         >
                                             {link.name}
+                                            {link.mega && (
+                                                <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${activeMega === link.mega ? 'rotate-180' : ''}`} />
+                                            )}
                                         </Link>
                                         {showLine && (
                                             <motion.div
@@ -360,57 +305,75 @@ function Navbar() {
                                     </Link>
                                 </div>
 
-                                {/* Col 2–3 — Link Columns */}
-                                <div className="col-span-6 grid grid-cols-2 gap-10">
-                                    {megaContent[activeMega].columns.map((col, idx) => (
-                                        <div key={idx} className="space-y-5">
-                                            <p className="text-[10px] font-black uppercase tracking-[0.35em] text-white/30">
-                                                {col.title}
-                                            </p>
-                                            <div className="flex flex-col gap-1">
-                                                {col.links.map((link) => (
+                                {/* Col 2+ — Link Columns & Featured */}
+                                <div className={`${megaContent[activeMega].featured ? 'col-span-9 grid grid-cols-12 gap-10' : 'col-span-9 grid grid-cols-3 gap-10'}`}>
+                                    <div className={`${megaContent[activeMega].featured ? 'col-span-8 grid grid-cols-2 gap-10' : 'col-span-12 grid grid-cols-3 gap-10'}`}>
+                                        {megaContent[activeMega].columns.map((col, idx) => (
+                                            <div key={idx} className="space-y-5">
+                                                {col.path ? (
                                                     <Link
-                                                        key={link.name}
-                                                        to={link.path}
+                                                        to={col.path}
                                                         onClick={() => setActiveMega(null)}
-                                                        className="group flex items-center gap-2.5 py-1.5 text-white/75 hover:text-[#00b0d4] transition-colors"
+                                                        className="inline-block text-[10px] font-black uppercase tracking-[0.35em] text-[#00b0d4]/60 hover:text-[#ff8d00] transition-colors"
                                                     >
-                                                        {link.icon && (
-                                                            <span className="text-white/20 group-hover:text-[#ff8d00] transition-colors shrink-0">
-                                                                {link.icon}
-                                                            </span>
-                                                        )}
-                                                        <span className="text-[13px] font-semibold leading-snug group-hover:translate-x-0.5 transition-transform">
-                                                            {link.name}
-                                                        </span>
+                                                        {col.title}
                                                     </Link>
-                                                ))}
+                                                ) : (
+                                                    <p className="text-[10px] font-black uppercase tracking-[0.35em] text-white/30">
+                                                        {col.title}
+                                                    </p>
+                                                )}
+                                                <div className="flex flex-col gap-1">
+                                                    {col.links.map((link) => (
+                                                        <Link
+                                                            key={link.name}
+                                                            to={link.path}
+                                                            onClick={() => setActiveMega(null)}
+                                                            className="group flex items-center gap-2.5 py-1.5 text-white/75 hover:text-[#00b0d4] transition-colors"
+                                                        >
+                                                            {link.icon && (
+                                                                <span className="text-white/30 group-hover:text-[#ff8d00] transition-colors">
+                                                                    {link.icon}
+                                                                </span>
+                                                            )}
+                                                            <span className="text-[13px] font-semibold leading-snug group-hover:translate-x-1 transition-transform">
+                                                                {link.name}
+                                                            </span>
+                                                        </Link>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    {/* Featured Column */}
+                                    {megaContent[activeMega].featured && (
+                                        <div className="col-span-4 pl-4 border-l border-white/5">
+                                            <div className="relative group cursor-pointer overflow-hidden rounded-2xl aspect-[4/3]">
+                                                <img
+                                                    src={megaContent[activeMega].featured.image}
+                                                    alt={megaContent[activeMega].featured.title}
+                                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                                />
+                                                <div className="absolute inset-0 bg-gradient-to-t from-[#011b26] via-[#011b26]/20 to-transparent" />
+                                                <div className="absolute inset-0 p-6 flex flex-col justify-end">
+                                                    <div className="space-y-1 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                                                        <p className="text-[9px] font-black uppercase tracking-widest text-[#00b0d4]">
+                                                            {megaContent[activeMega].featured.label}
+                                                        </p>
+                                                        <p className="text-lg font-black uppercase tracking-tight text-white leading-tight">
+                                                            {megaContent[activeMega].featured.title}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <Link
+                                                    to={megaContent[activeMega].featured.path}
+                                                    onClick={() => setActiveMega(null)}
+                                                    className="absolute inset-0 z-10"
+                                                />
                                             </div>
                                         </div>
-                                    ))}
-                                </div>
-
-                                {/* Col 4 — Featured */}
-                                <div className="col-span-3">
-                                    <p className="text-[10px] font-black uppercase tracking-[0.35em] text-white/30 mb-5">
-                                        Featured
-                                    </p>
-                                    <div className="group relative rounded-xl overflow-hidden aspect-[4/3] border border-white/5 cursor-pointer">
-                                        <img
-                                            src={megaContent[activeMega].featured.image}
-                                            alt={megaContent[activeMega].featured.title}
-                                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 brightness-75 group-hover:brightness-90"
-                                        />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-[#011b26]/90 via-transparent to-transparent" />
-                                        <div className="absolute bottom-0 left-0 right-0 p-5 space-y-1">
-                                            <span className="block text-[9px] font-black text-[#00b0d4] uppercase tracking-[0.3em]">
-                                                {megaContent[activeMega].featured.label}
-                                            </span>
-                                            <h4 className="text-sm font-bold text-white leading-snug">
-                                                {megaContent[activeMega].featured.title}
-                                            </h4>
-                                        </div>
-                                    </div>
+                                    )}
                                 </div>
 
                             </div>
@@ -440,38 +403,64 @@ function Navbar() {
 
                                 if (nav.mega) {
                                     return (
-                                        <li key={nav.name} className="w-full text-center">
-                                            <button
-                                                onClick={() => setExpandedAccordion(isExpanded ? null : nav.name)}
-                                                className={`w-full font-black text-3xl uppercase tracking-wider flex items-center justify-center gap-2 py-4 cursor-pointer ${isActive
+                                        <li key={nav.name} className="w-full">
+                                            <div className="flex items-center justify-center gap-4 py-4 border-b border-white/5 mx-auto w-fit">
+                                                <Link
+                                                    to={nav.path}
+                                                    onClick={() => setMenuOpen(false)}
+                                                    className={`font-black text-3xl uppercase tracking-wider transition-colors duration-300 ${isActive
                                                         ? 'text-[#00b0d4]'
-                                                        : 'text-white/60 hover:text-white transition-colors duration-300'
-                                                    }`}
-                                            >
-                                                {nav.name}
-                                                <ChevronDown className={`w-6 h-6 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
-                                            </button>
+                                                        : 'text-white/60 hover:text-white'
+                                                        }`}
+                                                >
+                                                    {nav.name}
+                                                </Link>
+                                                <button
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        setExpandedAccordion(isExpanded ? null : nav.name);
+                                                    }}
+                                                    className="p-2 bg-white/5 rounded-full border border-white/10"
+                                                    aria-label={`Toggle ${nav.name} details`}
+                                                >
+                                                    <ChevronDown className={`w-6 h-6 text-white/50 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                                                </button>
+                                            </div>
                                             <AnimatePresence>
                                                 {isExpanded && (
                                                     <motion.div
                                                         initial={{ height: 0, opacity: 0 }}
                                                         animate={{ height: 'auto', opacity: 1 }}
                                                         exit={{ height: 0, opacity: 0 }}
-                                                        className="overflow-hidden flex flex-col gap-4 py-4 bg-white/5 rounded-2xl mb-4"
+                                                        className="overflow-hidden flex flex-col gap-6 py-8 px-8 bg-white/5 rounded-3xl mt-2 mx-4"
                                                     >
+                                                        {/* Section Intro / Overview Link */}
+                                                        <div className="text-center pb-4 border-b border-white/5">
+                                                            <Link
+                                                                to={nav.path}
+                                                                onClick={() => setMenuOpen(false)}
+                                                                className="text-sm font-black text-[#ff8d00] uppercase tracking-[0.3em] inline-flex items-center gap-2 group"
+                                                            >
+                                                                Go to {nav.name} Overview
+                                                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                                            </Link>
+                                                        </div>
+
                                                         {megaContent[nav.mega].columns.map((col) => (
-                                                            <div key={col.title} className="flex flex-col gap-2">
-                                                                <span className="text-[10px] font-black text-white/30 uppercase tracking-widest">{col.title}</span>
-                                                                {col.links.map((subLink) => (
-                                                                    <Link
-                                                                        key={subLink.name}
-                                                                        to={subLink.path}
-                                                                        onClick={() => setMenuOpen(false)}
-                                                                        className="text-lg font-bold text-white/70 hover:text-[#ff8d00] transition-colors"
-                                                                    >
-                                                                        {subLink.name}
-                                                                    </Link>
-                                                                ))}
+                                                            <div key={col.title} className="flex flex-col gap-3">
+                                                                <span className="text-[10px] font-black text-white/30 uppercase tracking-[0.35em] text-center">{col.title}</span>
+                                                                <div className="flex flex-col gap-2">
+                                                                    {col.links.map((subLink) => (
+                                                                        <Link
+                                                                            key={subLink.name}
+                                                                            to={subLink.path}
+                                                                            onClick={() => setMenuOpen(false)}
+                                                                            className="text-lg font-bold text-white/70 hover:text-[#00b0d4] transition-colors py-1 text-center"
+                                                                        >
+                                                                            {subLink.name}
+                                                                        </Link>
+                                                                    ))}
+                                                                </div>
                                                             </div>
                                                         ))}
                                                     </motion.div>
@@ -488,8 +477,8 @@ function Navbar() {
                                         animate={{ opacity: 1, scale: 1, y: 0 }}
                                         transition={{ delay: 0.1 * index + 0.2 }}
                                         className={`font-black text-4xl uppercase tracking-wider text-center w-full ${isActive
-                                                ? 'text-[#00b0d4]'
-                                                : 'text-white/60 hover:text-white transition-colors duration-300'
+                                            ? 'text-[#00b0d4]'
+                                            : 'text-white/60 hover:text-white transition-colors duration-300'
                                             }`}
                                     >
                                         <Link

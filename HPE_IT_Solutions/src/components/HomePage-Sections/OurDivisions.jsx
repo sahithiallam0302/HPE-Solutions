@@ -1,30 +1,26 @@
 import React from 'react';
-import { Monitor, HardHat, Users, ArrowRight } from 'lucide-react';
-import { motion } from 'motion/react';
+import { Monitor, Building2, HardHat, ArrowRight } from 'lucide-react';
+import { motion } from "framer-motion";
 
 // Animation variants
 const fadeIn = (direction = 'up', delay = 0) => ({
     hidden: {
-        y: direction === 'up' ? 40 : direction === 'down' ? -40 : 0,
-        x: direction === 'left' ? 40 : direction === 'right' ? -40 : 0,
+        y: 30,
         opacity: 0,
-        scale: 0.95
     },
     show: {
         y: 0,
-        x: 0,
         opacity: 1,
-        scale: 1,
         transition: {
             type: 'spring',
-            duration: 1.25,
+            duration: 1,
             delay: delay,
-            bounce: 0.3
+            bounce: 0.2
         }
     }
 });
 
-const DivisionCard = ({ title, icon: Icon, description, delay, index }) => {
+const DivisionCard = ({ title, icon: Icon, services, delay, index }) => {
     return (
         <motion.div
             variants={fadeIn('up', delay)}
@@ -33,38 +29,36 @@ const DivisionCard = ({ title, icon: Icon, description, delay, index }) => {
             viewport={{ once: true, amount: 0.25 }}
             className="group relative flex flex-col h-full"
         >
-            {/* 3D glow hover effect background - refined to stay within card bounds */}
-            <div className="absolute -inset-2 bg-gradient-to-tr from-hpe-cyan/30 to-hpe-orange/30 blur-2xl rounded-3xl opacity-0 group-hover:opacity-60 transition-opacity duration-700 pointer-events-none z-0" />
+            <div className={`h-full relative z-10 p-[1px] rounded-xl transition-all duration-500 overflow-hidden bg-[#0a1219] border border-white/5 hover:border-brand-cyan/30 ${index === 2 ? 'border-t-2 border-t-brand-cyan/50' : ''}`}>
 
-            <div className="h-full relative z-10 p-[1px] rounded-2xl bg-gradient-to-b from-white/20 to-transparent dark:from-white/10 dark:to-transparent group-hover:from-hpe-cyan group-hover:to-hpe-orange transition-all duration-500 overflow-hidden shadow-xl hover:shadow-2xl hover:-translate-y-2">
-                {/* Main Card Content (Theme-Consistent Glassmorphism) */}
-                <div className="h-full bg-white dark:bg-[#022534] p-5 lg:p-6 flex flex-col items-start gap-3 rounded-2xl border border-slate-100 dark:border-white/5 transition-all duration-500 shadow-sm group-hover:shadow-hpe-cyan/10">
+                {/* Background Number */}
+                <div className="absolute top-6 right-8 text-7xl font-black text-white/[0.03] pointer-events-none z-0">
+                    {`0${index + 1}`}
+                </div>
 
-                    {/* Icon Container with internal 3D-like shadow */}
-                    <div className="w-16 h-16 rounded-2xl bg-slate-50 dark:bg-hpe-navy shadow-[0_10px_40px_rgba(0,0,0,0.1)] dark:shadow-[inset_0_0_20px_rgba(0,0,0,0.8),_0_0_15px_rgba(0,229,255,0.2)] flex items-center justify-center border border-slate-100 dark:border-hpe-cyan/30 group-hover:border-hpe-cyan group-hover:scale-110 transition-all duration-500 ring-4 ring-transparent group-hover:ring-hpe-cyan/10">
-                        {React.cloneElement(Icon, { className: "w-8 h-8 text-[#00b0d4] group-hover:text-hpe-cyan transition-colors" })}
+                <div className="h-full p-6 md:p-8 flex flex-col items-start gap-5 rounded-xl relative z-10">
+
+                    {/* Icon - Using colors similar to the reference emoji/icons */}
+                    <div className="w-12 h-12 flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
+                        {React.cloneElement(Icon, { size: 36, className: index === 0 ? "text-blue-400" : index === 1 ? "text-slate-300" : "text-orange-400" })}
                     </div>
 
-                    {/* Title */}
-                    <h3 className="text-2xl font-orbitron font-bold text-slate-900 dark:text-white group-hover:text-hpe-cyan transition-colors duration-300 tracking-tight leading-none">
-                        {title}
-                    </h3>
+                    <div className="space-y-6 flex-grow">
+                        {/* Title */}
+                        <h3 className="text-xl font-rajdhani font-black text-white leading-tight">
+                            {title}
+                        </h3>
 
-                    {/* Description */}
-                    <p className="text-slate-600 dark:text-slate-300 font-sans leading-relaxed text-[15px] opacity-90">
-                        {description}
-                    </p>
-
-                    {/* CTA Button */}
-                    <button className="mt-auto pt-6 flex items-center gap-3 text-hpe-orange dark:text-hpe-orange font-bold uppercase tracking-[0.2em] text-[10px] hover:text-hpe-cyan dark:hover:text-white transition-all group/btn cursor-pointer">
-                        <span className="relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-current after:transition-all after:duration-300 group-hover/btn:after:w-full">
-                            Explore Division
-                        </span>
-                        <HardHat className="w-4 h-4 group-hover/btn:translate-x-2 transition-transform" />
-                    </button>
-
-                    {/* Decorative element inside card */}
-                    <div className="absolute -bottom-8 -right-8 w-24 h-24 bg-hpe-cyan/5 rounded-full blur-2xl group-hover:bg-hpe-cyan/15 transition-colors duration-700" />
+                        {/* Services List */}
+                        <ul className="space-y-3">
+                            {services.map((service, idx) => (
+                                <li key={idx} className="flex items-center gap-3 text-slate-400 group/item">
+                                    <span className="text-brand-cyan text-xs">→</span>
+                                    <span className="font-sans font-medium text-[13px] md:text-sm">{service}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
                 </div>
             </div>
         </motion.div>
@@ -76,62 +70,65 @@ const OurDivisions = () => {
         {
             title: "Enterprise IT Services",
             icon: <Monitor />,
-            description: "Application Development, ERP & Workflow Automation, Infrastructure Management, Cloud & Data Systems.",
+            services: [
+                "Application Development",
+                "ERP & Workflow Automation",
+                "Infrastructure Management",
+                "Cloud & Data Systems"
+            ],
             delay: 0.1
         },
         {
             title: "Brick-Oriented Infrastructure Services",
-            icon: <HardHat />,
-            description: "Construction Digital Monitoring, Real Estate ERP Systems, Vendor & Procurement Management, Site Workforce Automation.",
-            delay: 0.3
+            icon: <Building2 />,
+            services: [
+                "Construction Digital Monitoring",
+                "Real Estate ERP Systems",
+                "Vendor & Procurement Management",
+                "Site Workforce Automation"
+            ],
+            delay: 0.2
         },
         {
             title: "Workforce & Non-IT Services",
-            icon: <Users />,
-            description: "Project-based manpower deployment, Technical support services, Back-office & compliance operations.",
-            delay: 0.5
+            icon: <HardHat />,
+            services: [
+                "Project-based Manpower Deployment",
+                "Technical Support Services",
+                "Back-office & Compliance Operations"
+            ],
+            delay: 0.3
         }
     ];
 
     return (
-        <section id="projects" className="relative bg-slate-50 dark:bg-[#011b26] py-16 px-6 md:py-24 transition-colors duration-500 overflow-hidden" aria-labelledby="divisions-heading">
-            {/* Abstract Background Elements */}
-            <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
-                <div className="absolute -top-24 -left-24 w-96 h-96 bg-hpe-cyan/5 rounded-full blur-[120px] dark:opacity-20" />
-                <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-hpe-orange/5 rounded-full blur-[120px] dark:opacity-20" />
-            </div>
+        <section id="projects" className="relative bg-[#020c13] py-16 px-6 md:py-20 transition-colors duration-500" aria-labelledby="divisions-heading">
+            <div className="max-w-7xl mx-auto relative z-10">
 
-            <div className="max-w-7xl mx-auto relative z-10 font-sans">
-                {/* Section Header - Centered for proper alignment */}
-                <div className="flex flex-col items-center text-center mb-12 md:mb-16 px-4">
+                {/* Section Header */}
+                <div className="mb-12 text-left">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.7 }}
                     >
-                        <span className="inline-block font-rajdhani text-brand-orange dark:text-hpe-orange tracking-[0.4em] font-black text-xs uppercase mb-6 px-4 py-1.5 bg-brand-orange/10 dark:bg-hpe-orange/10 rounded-full">
-                            Expertise & Innovation
+                        <span className="inline-block font-rajdhani text-brand-cyan tracking-[0.3em] font-black text-[10px] uppercase mb-4">
+                            CORE DIVISIONS
                         </span>
 
-                        <h2 id="divisions-heading" className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white leading-[1.1] tracking-tight mb-6">
-                            Three Pillars of <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-hpe-cyan to-hpe-orange animate-glow-pulse">
-                                HPE Excellence
-                            </span>
+                        <h2 id="divisions-heading" className="text-3xl sm:text-4xl md:text-6xl text-white leading-none tracking-tight mb-6 uppercase">
+                            WHAT WE DO
                         </h2>
 
-                        <div className="w-24 h-1 bg-gradient-to-r from-hpe-cyan to-hpe-orange mx-auto mb-8 rounded-full" />
-
-                        <p className="text-slate-600 dark:text-slate-400 text-lg md:text-xl max-w-3xl leading-relaxed mx-auto font-medium">
-                            Delivering integrated digital and physical infrastructure ecosystems across India,
-                            driven by centralized governance and technological innovation.
+                        <p className="text-slate-400 text-base md:text-lg max-w-2xl leading-relaxed font-normal font-sans">
+                            Three integrated verticals powering enterprise transformation across India.
                         </p>
                     </motion.div>
                 </div>
 
-                {/* Division Cards Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+                {/* Division Cards Grid - Decreased Gap */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                     {divisions.map((div, i) => (
                         <DivisionCard
                             key={i}
@@ -139,15 +136,6 @@ const OurDivisions = () => {
                             {...div}
                         />
                     ))}
-                </div>
-
-                {/* Section Footer Decoration */}
-                <div className="mt-12 flex justify-center opacity-30">
-                    <div className="flex gap-2">
-                        {[1, 2, 3].map(i => (
-                            <div key={i} className="w-2 h-2 rounded-full bg-slate-300 dark:bg-slate-700" />
-                        ))}
-                    </div>
                 </div>
             </div>
         </section>

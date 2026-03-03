@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowRight, Globe, Zap, Target } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion } from "framer-motion";
 import { useNavigate } from 'react-router-dom';
 
 // Animation variants
@@ -26,7 +26,7 @@ const fadeIn = (direction = 'up', delay = 0) => ({
 const AboutUsSection = () => {
     const navigate = useNavigate();
     return (
-        <section className="relative bg-white dark:bg-[#011b26] py-12 px-6 md:py-24 transition-colors duration-500 overflow-hidden" aria-labelledby="about-heading">
+        <section id="about-section" className="relative bg-white dark:bg-[#011b26] py-12 px-6 md:py-24 transition-colors duration-500 overflow-hidden" aria-labelledby="about-heading">
 
             {/* Abstract Background Glows */}
             <div className="absolute top-0 right-0 w-full h-full overflow-hidden pointer-events-none z-0">
@@ -49,14 +49,14 @@ const AboutUsSection = () => {
                         <div className="absolute -top-6 -left-6 w-full h-full border-2 border-[#00b0d4]/20 rounded-2xl -z-10 transition-transform duration-500" />
                         <div className="absolute -bottom-6 -right-6 w-full h-full border-2 border-[#ff8d00]/20 rounded-2xl -z-10" />
 
-                        <div className="relative group overflow-hidden rounded-2xl shadow-2xl glass-reflection">
+                        <div className="relative group overflow-hidden rounded-2xl shadow-2xl glass-reflection border border-white/10">
                             <img
-                                src="/AboutUsHomePageImage.png"
-                                alt="HPE IT Solutions Enterprise Workspace"
-                                className="w-full h-[350px] md:h-[500px] object-cover transition-transform duration-1000 group-hover:scale-110"
+                                src="/infra_ecosys.png"
+                                alt="HPE IT Solutions Infrastructure Ecosystems"
+                                className="w-full h-[400px] md:h-[550px] object-cover transition-transform duration-1000 group-hover:scale-105"
                             />
-                            {/* Gradient Overlay */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-[#011b26]/40 to-transparent opacity-60 group-hover:opacity-30 transition-opacity duration-700" />
+                            {/* Refined Gradient Overlay */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-[#011b26]/50 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-700" />
 
                             {/* Floating Stats Badge */}
                             <div className="absolute bottom-6 right-6 bg-white/90 dark:bg-[#022534]/90 backdrop-blur-md p-6 rounded-2xl shadow-2xl border border-white/20 dark:border-white/10 max-w-[200px] transform hover:scale-105 transition-transform">
@@ -79,7 +79,7 @@ const AboutUsSection = () => {
                                 WHO WE ARE
                             </span>
 
-                            <h2 id="about-heading" className="text-3xl md:text-4xl lg:text-5xl font-black text-[#011b26] dark:text-white leading-[1.1] tracking-tight">
+                            <h2 id="about-heading" className="text-3xl sm:text-4xl md:text-6xl text-[#011b26] dark:text-white leading-tight tracking-tighter">
                                 Pioneering Enterprise <br />
                                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00b0d4] to-[#ff8d00]">
                                     Infrastructure
@@ -90,16 +90,15 @@ const AboutUsSection = () => {
                             <div className="w-20 h-1.5 bg-gradient-to-r from-[#00b0d4] to-[#ff8d00] rounded-full" />
                         </div>
 
-                        <div className="space-y-4 text-slate-600 dark:text-slate-400 text-lg md:text-xl leading-relaxed font-medium">
+                        <div className="space-y-4 md:space-y-6 text-slate-600 dark:text-slate-400 text-base md:text-xl leading-relaxed font-medium">
                             <p>
-                                HPE IT Solutions stands at the intersection of technological innovation and physical
-                                infrastructure excellence. We deliver integrated ecosystems that power the modern enterprise
-                                with <span className="text-[#011b26] dark:text-white font-bold decoration-[#00b0d4] decoration-4 underline-offset-4 underline">Pan-India efficiency</span>.
+                                HPE IT Solutions is a multi-vertical enterprise focused on IT services, infrastructure support, and
+                                <span className="text-[#011b26] dark:text-white font-bold decoration-[#00b0d4] decoration-4 underline-offset-4 underline inline"> brick oriented project execution</span>.
+                                With over 70 strategic mergers across India, we manage large-scale enterprise and real estate operations
+                                through a blend of centralized digital systems and decentralized execution teams.
                             </p>
                             <p>
-                                Our "Brick-Oriented" execution model ensures that your digital transformation is
-                                built on a foundation of reliability, compliance, and scalable performance-driven
-                                governance frameworks.
+                                Our headquarters is in <span className="text-[#ff8d00] font-bold">Hyderabad</span>, with operational hubs in major metropolitan areas across the nation.
                             </p>
                         </div>
 
@@ -107,11 +106,11 @@ const AboutUsSection = () => {
                             <motion.button
                                 whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(0,176,212,0.2)" }}
                                 whileTap={{ scale: 0.95 }}
-                                className="group flex items-center space-x-4 bg-gradient-to-r from-[#00b0d4] to-[#008ba8] text-white px-10 py-5 rounded-full font-black text-sm uppercase tracking-[0.3em] transition-all duration-300 shadow-xl cursor-pointer"
+                                className="group flex items-center space-x-4 bg-gradient-to-r from-[#00b0d4] to-[#008ba8] text-white px-8 md:px-10 py-4 md:py-5 rounded-full font-black text-xs md:text-sm uppercase tracking-[0.2em] md:tracking-[0.3em] transition-all duration-300 shadow-xl cursor-pointer"
                                 onClick={() => navigate('/about')}
                             >
                                 <span>Read More about us</span>
-                                <ArrowRight className="w-6 h-6 transition-transform group-hover:translate-x-3" />
+                                <ArrowRight className="w-5 h-5 md:w-6 md:h-6 transition-transform group-hover:translate-x-3" />
                             </motion.button>
                         </div>
                     </motion.div>

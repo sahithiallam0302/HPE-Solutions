@@ -128,7 +128,278 @@ const StatCard = ({ stat, delay }) => {
 /* ════════════════════════════════════════════
    CATEGORY CARD
 ════════════════════════════════════════════ */
-/* ─── Immersive Category Banner (TCS Style) ─── */
+/* ════════════════════════════════════════════
+   PROJECT CARD
+════════════════════════════════════════════ */
+const ProjectCard = ({ project, index, delay }) => {
+    const targetPath = project.id <= 3
+        ? `/projects/group-1#project-${project.id}`
+        : project.id <= 7
+            ? `/projects/group-2#project-${project.id}`
+            : `/projects/group-3#project-${project.id}`;
+
+    return (
+        <FadeUp delay={delay} className="h-full">
+            <Link to={targetPath}
+                className="group relative block h-[450px] rounded-3xl overflow-hidden bg-slate-50 dark:bg-[#020817] border border-slate-200 dark:border-white/10 shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-3">
+
+                {/* PROJECT IMAGE */}
+                <div className="h-60 overflow-hidden relative bg-slate-950/20">
+                    <img
+                        src={project.image}
+                        alt={project.name}
+                        className="w-full h-full object-contain p-2 transition-transform duration-1000 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
+                </div>
+
+                {/* Visual Accent */}
+                <div className="absolute top-60 left-0 w-full h-1 bg-gradient-to-r from-blue-600 to-indigo-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left" />
+
+                {/* Content Container */}
+                <div className="p-6 h-full flex flex-col">
+                    <div className="mb-4 flex items-start justify-between">
+                        <span className="text-[9px] font-black uppercase tracking-widest text-blue-600 bg-blue-50 dark:bg-blue-900/20 px-3 py-1 rounded-full">
+                            Project {project.id < 10 ? `0${project.id}` : project.id}
+                        </span>
+                        <ArrowUpRight className="w-4 h-4 text-slate-300 dark:text-white/10 group-hover:text-blue-600 transition-colors" />
+                    </div>
+
+                    <h3 className="text-sm md:text-base font-black text-slate-900 dark:text-white leading-tight tracking-tight uppercase mb-3 line-clamp-2">
+                        {project.name}
+                    </h3>
+
+                    <p className="text-slate-500 dark:text-slate-400 text-[13px] font-medium leading-relaxed line-clamp-3 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">
+                        {project.description || project.summary}
+                    </p>
+
+                    <div className="mt-auto flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-blue-600 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-500">
+                        View Detailed Case <ArrowRight className="w-4 h-4" />
+                    </div>
+                </div>
+            </Link>
+        </FadeUp>
+    );
+};
+
+/* ════════════════════════════════════════════
+   MAIN PAGE
+════════════════════════════════════════════ */
+export default function ProjectsPage() {
+    const headerRef = useRef(null);
+    const { scrollYProgress } = useScroll({ target: headerRef, offset: ['start start', 'end start'] });
+    const ghostY = useTransform(scrollYProgress, [0, 1], ['0%', '25%']);
+
+    return (
+        <article className="relative bg-white text-slate-900 font-sans overflow-x-hidden pt-20">
+            <title>Project Portfolio | HPE IT Solutions</title>
+
+            {/* ══════════════════════════════════════
+                HEADER — Typographic hero with ghost text
+            ══════════════════════════════════════ */}
+            <main className="relative z-10 bg-white dark:bg-[#0a0f1e]">
+                {/* ══════════════════════════════════════
+                    HEADER — Typographic Hero (No Image)
+                ══════════════════════════════════════ */}
+                <section className="relative px-8 md:px-16 py-20 md:py-28 border-b border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-[#020c13] overflow-hidden">
+
+                    {/* Subtle background grid */}
+                    <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
+                        style={{ backgroundImage: 'linear-gradient(#3b82f6 1px, transparent 1px), linear-gradient(to right, #3b82f6 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
+
+                    {/* Glowing orb accents */}
+                    <div className="absolute -top-20 -left-32 w-[500px] h-[500px] bg-blue-600/5 rounded-full blur-3xl pointer-events-none" />
+                    <div className="absolute -bottom-32 -right-32 w-[400px] h-[400px] bg-indigo-600/5 rounded-full blur-3xl pointer-events-none" />
+
+                    <div className="max-w-5xl mx-auto relative z-10">
+
+                        {/* Eyebrow tag */}
+                        <motion.div
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                            className="flex items-center gap-4 mb-8"
+                        >
+                            <motion.div
+                                className="h-px bg-blue-500"
+                                initial={{ width: 0 }}
+                                animate={{ width: 48 }}
+                                transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+                            />
+                            <span className="text-blue-500 dark:text-blue-400 text-[11px] font-black uppercase tracking-[0.4em]">
+                                Enterprise Portfolio
+                            </span>
+                        </motion.div>
+
+                        {/* Main heading — word-by-word slide-up */}
+                        <div className="overflow-hidden mb-3">
+                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tight leading-tight">
+                                {[
+                                    { word: 'Project', color: 'text-slate-900 dark:text-white' },
+                                    { word: 'Portfolio', color: 'text-blue-600 dark:text-blue-400' },
+                                ].map(({ word, color }, wi) => (
+                                    <motion.span
+                                        key={wi}
+                                        className={`inline-block mr-4 ${color}`}
+                                        initial={{ y: 80, opacity: 0 }}
+                                        animate={{ y: 0, opacity: 1 }}
+                                        transition={{
+                                            duration: 0.8,
+                                            delay: 0.15 + wi * 0.18,
+                                            ease: [0.22, 1, 0.36, 1],
+                                        }}
+                                    >
+                                        {word}
+                                    </motion.span>
+                                ))}
+                            </h1>
+                        </div>
+
+                        {/* Animated underline bar */}
+                        <motion.div
+                            className="h-[3px] bg-gradient-to-r from-blue-600 to-indigo-500 rounded-full mb-8 origin-left"
+                            initial={{ scaleX: 0 }}
+                            animate={{ scaleX: 1 }}
+                            transition={{ duration: 0.9, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                            style={{ width: '6rem' }}
+                        />
+
+                        {/* Description paragraph */}
+                        <motion.p
+                            className="text-slate-500 dark:text-slate-400 text-base md:text-lg max-w-2xl font-medium leading-relaxed"
+                            initial={{ opacity: 0, y: 24 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.7, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                        >
+                            A comprehensive record of 10 national-scale infrastructure and digital transformation projects delivered with measurable excellence across the Indian landscape.
+                        </motion.p>
+
+                        {/* Stats strip — staggered per-stat animation */}
+                        <div className="flex flex-wrap gap-10 mt-12 pt-10 border-t border-slate-200 dark:border-white/5">
+                            {[
+                                { value: '10', label: 'Enterprise Projects' },
+                                { value: '8+', label: 'States Covered' },
+                                { value: '3', label: 'Industry Verticals' },
+                                { value: '800+', label: 'Workforce Deployed' },
+                            ].map((stat, i) => (
+                                <motion.div
+                                    key={i}
+                                    className="flex flex-col gap-1"
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.6, delay: 0.7 + i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                                >
+                                    <span className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white tabular-nums">{stat.value}</span>
+                                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">{stat.label}</span>
+                                </motion.div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                {/* ══════════════════════════════════════
+                ALL 10 PROJECTS SHOWCASE
+            ══════════════════════════════════════ */}
+                <section className="py-32 bg-[#020817] border-t border-white/5 relative overflow-hidden group/all">
+                    {/* Background Decor */}
+                    <div className="absolute inset-0 opacity-20 pointer-events-none"
+                        style={{ backgroundImage: 'radial-gradient(circle, #334155 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+
+                    <div className="max-w-[1600px] mx-auto relative z-10 px-6">
+                        {/* Header */}
+                        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 mx-auto">
+                            <FadeUp className="text-left">
+                                <div className="flex items-center gap-3 mb-4">
+                                    <div className="w-8 h-0.5 bg-[#00e5ff] rounded-full" />
+                                    <span className="text-[10px] font-black tracking-[0.5em] uppercase text-[#00e5ff]">The Full Portfolio</span>
+                                </div>
+                                <h2 className="text-2xl md:text-4xl font-black uppercase tracking-tight text-white leading-tight">
+                                    Strategic Delivery
+                                </h2>
+                                <p className="text-slate-400 max-w-2xl font-medium mt-4">
+                                    Browse our detailed engagements across state-level infrastructure and enterprise software.
+                                </p>
+                            </FadeUp>
+
+                            {/* Navigation Buttons */}
+                            <FadeUp delay={0.2} className="flex items-center gap-4">
+                                <button
+                                    onClick={() => {
+                                        const container = document.getElementById('project-scroll-container');
+                                        if (container) container.scrollBy({ left: -300, behavior: 'smooth' });
+                                    }}
+                                    className="w-14 h-14 rounded-full border border-white/10 flex items-center justify-center text-white hover:bg-white hover:text-black transition-all duration-300"
+                                    aria-label="Scroll Left"
+                                >
+                                    <ChevronLeft className="w-6 h-6" />
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        const container = document.getElementById('project-scroll-container');
+                                        if (container) container.scrollBy({ left: 300, behavior: 'smooth' });
+                                    }}
+                                    className="w-14 h-14 rounded-full border border-white/10 flex items-center justify-center text-white hover:bg-white hover:text-black transition-all duration-300"
+                                    aria-label="Scroll Right"
+                                >
+                                    <ChevronRight className="w-6 h-6" />
+                                </button>
+                            </FadeUp>
+                        </div>
+
+                        {/* Horizontal Scroll Container */}
+                        <div
+                            id="project-scroll-container"
+                            className="flex overflow-x-auto gap-4 md:gap-5 pb-12 snap-x snap-mandatory no-scrollbar scroll-smooth"
+                            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                        >
+                            {showcaseProjects.map((p, i) => (
+                                <div key={p.id} className="min-w-[280px] md:min-w-[320px] lg:min-w-[calc((100%-4*1.25rem)/4)] snap-start">
+                                    <ProjectCard project={p} index={i} delay={i * 0.05} />
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* CSS to hide scrollbar (standard across browsers) */}
+                    <style dangerouslySetInnerHTML={{
+                        __html: `
+                    #project-scroll-container::-webkit-scrollbar {
+                        display: none;
+                    }
+                ` }} />
+                </section>
+
+                {/* ══════════════════════════════════════
+                    PAGE FOOTER — Large Visionary Image
+                ══════════════════════════════════════ */}
+                <section className="relative h-[60vh] md:h-[80vh] w-full overflow-hidden border-t border-white/5">
+                    <img
+                        src="/Inside_cover.png"
+                        alt="HPE IT Solutions Impact"
+                        className="absolute inset-0 w-full h-full object-cover grayscale-[0.4] brightness-50"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-b from-[#020817] via-transparent to-[#020817]/90" />
+
+                    <div className="relative z-10 w-full h-full flex flex-col items-center justify-center px-8 text-center">
+                        <FadeUp>
+                            <span className="text-blue-400 text-[10px] md:text-xs font-black uppercase tracking-[0.5em] mb-6 block">
+                                Beyond Infrastructure
+                            </span>
+                            <h2 className="text-3xl md:text-6xl font-black text-white uppercase tracking-tighter max-w-5xl leading-none">
+                                Transforming the <br /> National <span className="text-blue-400">Digital</span> Landscape
+                            </h2>
+                            <p className="text-slate-400 text-base md:text-xl font-medium mt-8 max-w-2xl mx-auto">
+                                Every project we undertake is a step towards a more connected and efficient future for India.
+                            </p>
+                        </FadeUp>
+                    </div>
+                </section>
+
+            </main>
+        </article>
+    );
+}
+
 const GroupBanner = ({ cat, delay }) => (
     <FadeUp delay={delay} className="w-full">
         <Link to={cat.path} className="group relative block w-full min-h-[60vh] md:min-h-[75vh] overflow-hidden border-b border-white/5">
@@ -172,148 +443,3 @@ const GroupBanner = ({ cat, delay }) => (
         </Link>
     </FadeUp>
 );
-
-/* ════════════════════════════════════════════
-   PROJECT CARD
-════════════════════════════════════════════ */
-const ProjectCard = ({ project, index, delay }) => {
-    const targetPath = project.id <= 3
-        ? `/projects/group-1#project-${project.id}`
-        : project.id <= 7
-            ? `/projects/group-2#project-${project.id}`
-            : `/projects/group-3#project-${project.id}`;
-
-    return (
-        <FadeUp delay={delay} className="h-full">
-            <Link to={targetPath}
-                className="group relative block h-[380px] rounded-3xl overflow-hidden bg-slate-50 dark:bg-[#020817] border border-slate-200 dark:border-white/10 shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-3">
-
-                {/* Visual Accent */}
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-600 to-indigo-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left" />
-
-                {/* Content Container */}
-                <div className="p-8 h-full flex flex-col">
-                    <div className="mb-6 flex items-start justify-end">
-                        <ArrowUpRight className="w-5 h-5 text-slate-300 dark:text-white/10 group-hover:text-blue-600 transition-colors" />
-                    </div>
-
-                    <h3 className="text-base md:text-lg font-black text-slate-900 dark:text-white leading-tight tracking-tight uppercase mb-4">
-                        {project.name}
-                    </h3>
-
-                    <p className="text-slate-500 dark:text-slate-400 text-sm font-medium leading-relaxed line-clamp-4 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">
-                        {project.description || project.summary}
-                    </p>
-
-                    <div className="mt-auto flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-blue-600 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-500">
-                        View Detailed Case <ArrowRight className="w-4 h-4" />
-                    </div>
-                </div>
-            </Link>
-        </FadeUp>
-    );
-};
-
-/* ════════════════════════════════════════════
-   MAIN PAGE
-════════════════════════════════════════════ */
-export default function ProjectsPage() {
-    const headerRef = useRef(null);
-    const { scrollYProgress } = useScroll({ target: headerRef, offset: ['start start', 'end start'] });
-    const ghostY = useTransform(scrollYProgress, [0, 1], ['0%', '25%']);
-
-    return (
-        <article className="relative bg-white text-slate-900 font-sans overflow-x-hidden pt-20">
-            <title>Project Portfolio | HPE IT Solutions</title>
-
-            {/* ══════════════════════════════════════
-                HEADER — Typographic hero with ghost text
-            ══════════════════════════════════════ */}
-            <main className="relative z-10 bg-white dark:bg-[#0a0f1e] pt-32">
-                <section className="px-8 md:px-16 mb-16">
-                    <FadeUp>
-                        <h1 className="text-2xl md:text-3xl font-black uppercase tracking-tight text-slate-900 dark:text-white">
-                            Project <span className="text-blue-600">Portfolio</span>
-                        </h1>
-                        <p className="text-slate-500 dark:text-slate-400 mt-4 max-w-2xl font-medium">
-                            A comprehensive record of 10 national-scale infrastructure and digital transformation projects delivered with measurable excellence.
-                        </p>
-                    </FadeUp>
-                </section>
-
-                {/* ══════════════════════════════════════
-                ALL 10 PROJECTS SHOWCASE
-            ══════════════════════════════════════ */}
-                <section className="py-32 bg-[#020817] border-t border-white/5 relative overflow-hidden group/all">
-                    {/* Background Decor */}
-                    <div className="absolute inset-0 opacity-20 pointer-events-none"
-                        style={{ backgroundImage: 'radial-gradient(circle, #334155 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
-
-                    <div className="max-w-[1600px] mx-auto relative z-10 px-6">
-                        {/* Header */}
-                        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 mx-auto">
-                            <FadeUp className="text-left">
-                                <div className="flex items-center gap-3 mb-4">
-                                    <div className="w-8 h-0.5 bg-[#00e5ff] rounded-full" />
-                                    <span className="text-[10px] font-black tracking-[0.5em] uppercase text-[#00e5ff]">The Full Portfolio</span>
-                                </div>
-                                <h2 className="text-2xl md:text-4xl font-black uppercase tracking-tight text-white leading-tight">
-                                    Projects
-                                </h2>
-                                <p className="text-slate-400 max-w-2xl font-medium mt-4">
-                                    A comprehensive look at our national-scale infrastructure and digital transformations.
-                                </p>
-                            </FadeUp>
-
-                            {/* Navigation Buttons */}
-                            <FadeUp delay={0.2} className="flex items-center gap-4">
-                                <button
-                                    onClick={() => {
-                                        const container = document.getElementById('project-scroll-container');
-                                        if (container) container.scrollBy({ left: -300, behavior: 'smooth' });
-                                    }}
-                                    className="w-14 h-14 rounded-full border border-white/10 flex items-center justify-center text-white hover:bg-white hover:text-black transition-all duration-300"
-                                    aria-label="Scroll Left"
-                                >
-                                    <ChevronLeft className="w-6 h-6" />
-                                </button>
-                                <button
-                                    onClick={() => {
-                                        const container = document.getElementById('project-scroll-container');
-                                        if (container) container.scrollBy({ left: 300, behavior: 'smooth' });
-                                    }}
-                                    className="w-14 h-14 rounded-full border border-white/10 flex items-center justify-center text-white hover:bg-white hover:text-black transition-all duration-300"
-                                    aria-label="Scroll Right"
-                                >
-                                    <ChevronRight className="w-6 h-6" />
-                                </button>
-                            </FadeUp>
-                        </div>
-
-                        {/* Horizontal Scroll Container */}
-                        <div
-                            id="project-scroll-container"
-                            className="flex overflow-x-auto gap-4 md:gap-5 pb-12 snap-x snap-mandatory no-scrollbar scroll-smooth"
-                            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-                        >
-                            {showcaseProjects.map((p, i) => (
-                                <div key={p.id} className="min-w-[280px] md:min-w-[300px] lg:min-w-[calc((100%-4*1.25rem)/5)] snap-start">
-                                    <ProjectCard project={p} index={i} delay={i * 0.05} />
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* CSS to hide scrollbar (standard across browsers) */}
-                    <style dangerouslySetInnerHTML={{
-                        __html: `
-                    #project-scroll-container::-webkit-scrollbar {
-                        display: none;
-                    }
-                ` }} />
-                </section>
-
-            </main>
-        </article>
-    );
-}

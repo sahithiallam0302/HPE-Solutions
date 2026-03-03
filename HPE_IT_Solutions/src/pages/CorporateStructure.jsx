@@ -109,36 +109,13 @@ const CorporateStructure = () => {
                                 <div className={`w-full max-w-[900px] h-px ${isDark ? 'bg-white/30' : 'bg-slate-300'}`} />
 
                                 {/* Tier 3 - C-Suite Officers */}
-                                <div className="w-full max-w-[1000px] grid grid-cols-5 gap-3">
-                                    {['CEO', 'COO', 'CTO', 'CFO', 'CHRO'].map((abbr, i) => (
+                                <div className="w-full max-w-[1000px] grid grid-cols-4 gap-3">
+                                    {['COO', 'CTO', 'CFO', 'CHRO'].map((abbr, i) => (
                                         <div key={abbr} className="flex flex-col items-center">
                                             <div className={`w-px h-10 ${isDark ? 'bg-white/30' : 'bg-slate-300'}`} />
                                             <div className={`w-full px-4 py-5 rounded-xl border text-center transition-all shadow-md group ${isDark ? 'border-white/20 bg-white/5 hover:bg-white/10' : 'border-slate-200 bg-white hover:bg-slate-50'}`}>
                                                 <p className={`font-black tracking-widest text-[13px] mb-1 ${isDark ? 'text-[#a5b4fc]' : 'text-indigo-600'}`}>{abbr}</p>
                                                 <p className={`font-bold text-[10px] uppercase tracking-tighter ${isDark ? 'text-white/60' : 'text-slate-500'}`}>Executive Office</p>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-
-                                <div className="flex justify-center w-full">
-                                    <div className={`w-px h-14 ${isDark ? 'bg-white/20' : 'bg-slate-300'}`} />
-                                </div>
-                                <div className={`w-full max-w-[850px] h-px ${isDark ? 'bg-white/[0.18]' : 'bg-slate-300'}`} />
-
-                                {/* Tier 4 - Divisions */}
-                                <div className="w-full max-w-[900px] grid grid-cols-4 gap-4">
-                                    {[
-                                        'Enterprise IT Services',
-                                        'Infrastructure & Brick Projects',
-                                        'Workforce & Managed Services',
-                                        'Finance & Compliance'
-                                    ].map((label, i) => (
-                                        <div key={i} className="flex flex-col items-center">
-                                            <div className={`w-px h-10 ${isDark ? 'bg-white/[0.18]' : 'bg-slate-300'}`} />
-                                            <div className={`w-full px-4 py-6 rounded-2xl border transition-all shadow-md text-center ${isDark ? 'border-white/10 bg-white/[0.04] hover:bg-white/[0.08]' : 'border-slate-100 bg-slate-50 hover:bg-slate-100'}`}>
-                                                <p className={`font-black text-[12px] leading-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>{label}</p>
-                                                <div className="w-6 h-0.5 mx-auto mt-3 bg-blue-500/30 rounded-full" />
                                             </div>
                                         </div>
                                     ))}
@@ -272,7 +249,7 @@ const CorporateStructure = () => {
             <Divider isDark={isDark} />
 
             {/* 7) CTA SECTION */}
-            <section className="px-8 md:px-16 pt-24 pb-48">
+            <section className="px-8 md:px-16 pt-20 pb-48">
                 <FadeUp className="max-w-7xl mx-auto">
                     <div className={`relative py-20 px-10 md:px-20 rounded-3xl border overflow-hidden transition-all duration-500 ${isDark ? 'border-white/10 bg-white/[0.02]' : 'border-slate-200 bg-white shadow-xl'}`}>
                         {isDark && <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-[40rem] h-[40rem] bg-blue-500/[0.05] blur-[120px] rounded-full pointer-events-none" />}
