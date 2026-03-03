@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import React from 'react';
+import ScrollToHash from './components/ScrollToHash';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import ScrollToHash from './components/ScrollToHash';
 import Navbar from './components/Navbar';
@@ -23,11 +25,12 @@ import WorkforceManagedServicesPage from './pages/WorkforceManagedServicesPage';
 import Contact from './pages/Contact';
 import Preloader from './components/common/Preloader';
 import ScrollIndicator from './components/common/ScrollIndicator';
-
+import EnterpriseService from './components/Services/EnterpriseService';
+import InfraBrickServices from './components/Services/Infra&BrickServices';
+import WorkforceManagedServices from './components/Services/Workforce&ManagedServices';
 function AppContent() {
   const location = useLocation();
   const [isPreloading, setIsPreloading] = useState(true);
-
   React.useEffect(() => {
     const titleMap = {
       '/': 'HPE IT Solutions | Enterprise Infrastructure',
@@ -47,6 +50,7 @@ function AppContent() {
       '/contact': 'Contact Us | HPE IT Solutions',
     };
     document.title = titleMap[location.pathname] || 'HPE IT Solutions';
+    window.scrollTo(0, 0);
   }, [location]);
 
   return (
@@ -84,10 +88,35 @@ function AppContent() {
           <ScrollIndicator />
         </>
       )}
+      <Navbar />
+      <main className={`flex-grow transition-all duration-500 ${isHome ? 'pt-0' : 'pt-32'}`}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/vision-mission" element={<VisionMission />} />
+          <Route path="/strength" element={<Strength />} />
+          <Route path="/corporate-structure" element={<CorporateStructure />} />
+          <Route path="/services" element={<ServicesPage />} />
+          <Route path="/services/enterprise" element={<EnterpriseService />} />
+          <Route path="/services/infrastructure" element={<InfraBrickServices />} />
+          <Route path="/services/workforce" element={<WorkforceManagedServices />} />
+          <Route path="/projects" element={<ProjectsPage />} />
+          <Route path="/projects/group-1" element={<ProjectsGroup1 />} />
+          <Route path="/projects/group-2" element={<ProjectsGroup2 />} />
+          <Route path="/projects/group-3" element={<ProjectsGroup3 />} />
+          <Route path="/projects/major" element={<MajorProjects />} />
+          <Route path="/projects/mid" element={<MidProjects />} />
+          <Route path="/projects/large" element={<LargeProjects />} />
+          <Route path="/certifications" element={<CertificationsPage />} />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
+      </main>
+      <Footer />
+      <Preloader />
+      <ScrollIndicator />
     </div>
   );
 }
-
 function App() {
   return (
     <Router>
@@ -96,5 +125,4 @@ function App() {
     </Router>
   );
 }
-
 export default App;

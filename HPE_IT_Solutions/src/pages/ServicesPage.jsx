@@ -65,6 +65,8 @@ const DivisionCard = ({
                     {/* Glow blob on hover */}
                     <div className={`absolute -top-20 -right-24 w-64 h-64 ${glowColor} rounded-full blur-[80px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none`} />
 
+                    <div className={`absolute -top-24 -right-24 w-64 h-64 ${glowColor} rounded-full blur-[80px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none`} />
+
                     {/* Top Row: Division No + Icon */}
                     <div className="flex items-start justify-between mb-7 relative z-10">
                         <div>
@@ -206,6 +208,7 @@ const ServicesPage = () => {
                 HERO
             ────────────────────────────────────────── */}
             <section className="relative min-h-[72vh] flex items-center pt-20 pb-24 overflow-hidden bg-[#011b26]">
+            <section className="relative min-h-[72vh] flex items-center pt-32 pb-24 overflow-hidden bg-[#011b26]">
                 {/* Background glows */}
                 <div className="absolute inset-0 pointer-events-none z-0">
                     <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-hpe-cyan/8 rounded-full blur-[140px] -translate-y-1/3 translate-x-1/3" />

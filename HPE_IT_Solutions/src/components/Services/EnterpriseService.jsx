@@ -197,6 +197,8 @@ const EnterpriseService = () => {
                 HERO
             ────────────────────────────────────────── */}
             <section className="relative min-h-[80vh] flex items-center pt-20 pb-28 overflow-hidden bg-[#011b26]">
+
+            <section className="relative min-h-[80vh] flex items-center pt-32 pb-28 overflow-hidden bg-[#011b26]">
                 {/* Background glow orbs */}
                 <div className="absolute inset-0 pointer-events-none z-0">
                     <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-hpe-cyan/10 rounded-full blur-[160px] -translate-y-1/3 translate-x-1/3" />

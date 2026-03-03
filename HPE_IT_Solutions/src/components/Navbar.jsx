@@ -3,6 +3,8 @@ import {
     Sun, Moon, Menu, X, ChevronDown, ArrowRight,
     Building2, Users, LayoutGrid, Shield,
     Headphones, Activity
+    Building2, Target, Users, LayoutGrid, Shield,
+    Globe, Server, Package, Headphones, Activity
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
@@ -17,6 +19,7 @@ function Navbar() {
     const [expandedAccordion, setExpandedAccordion] = useState(null);
 
     // Close menus on route change & handle scroll to hash
+    // Close menus on route change
     useEffect(() => {
         setMenuOpen(false);
         setActiveMega(null);
@@ -35,6 +38,8 @@ function Navbar() {
             window.scrollTo(0, 0);
         }
     }, [location.pathname, location.hash]);
+        window.scrollTo(0, 0);
+    }, [location.pathname]);
 
     const navLinks = [
         { name: 'HOME', path: '/' },
@@ -42,6 +47,7 @@ function Navbar() {
         { name: 'SERVICES', path: '/services', mega: 'services' },
         { name: 'PROJECTS', path: '/projects', mega: 'projects' },
         { name: 'CERTIFICATIONS', path: '/certifications' },
+        { name: 'CERTIFICATIONS', path: '/certifications', mega: 'certifications' },
         { name: 'CONTACT', path: '/contact' },
     ];
 
@@ -89,6 +95,10 @@ function Navbar() {
                         { name: "Enterprise IT Services", path: "/services/enterprise", icon: <LayoutGrid className="w-3.5 h-3.5" /> },
                         { name: "Infrastructure & Brick Services", path: "/services/infrastructure", icon: <Building2 className="w-3.5 h-3.5" /> },
                         { name: "Workforce & Managed Services", path: "/services/workforce", icon: <Users className="w-3.5 h-3.5" /> },
+
+                        { name: "Enterprise IT Services", path: "/services/enterprise", icon: <Server className="w-4 h-4" /> },
+                        { name: "Infrastructure & Brick Services", path: "/services/infrastructure", icon: <Building2 className="w-4 h-4" /> },
+                        { name: "Workforce & Managed Services", path: "/services/workforce", icon: <Users className="w-4 h-4" /> },
                     ]
                 },
                 {
@@ -97,6 +107,9 @@ function Navbar() {
                         { name: "National Support Network", path: "/services#support", icon: <Headphones className="w-3.5 h-3.5" /> },
                         { name: "Annual Maintenance (AMC)", path: "/services#amc", icon: <Shield className="w-3.5 h-3.5" /> },
                         { name: "Consulting & Strategy", path: "/services#consulting", icon: <Activity className="w-3.5 h-3.5" /> },
+                        { name: "National Support Network", path: "/services#support", icon: <Headphones className="w-4 h-4" /> },
+                        { name: "Annual Maintenance (AMC)", path: "/services#amc", icon: <Shield className="w-4 h-4" /> },
+                        { name: "Consulting & Strategy", path: "/services#consulting", icon: <Activity className="w-4 h-4" /> },
                     ]
                 }
             ],
@@ -105,6 +118,8 @@ function Navbar() {
                 label: "Operational Excellence",
                 image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop",
                 path: "/services"
+
+                image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop"
             }
         },
         projects: {
@@ -127,6 +142,31 @@ function Navbar() {
                 {
                     title: "Operational Systems (Group 2)",
                     path: "/projects/group-2",
+                    title: "National Infrastructure",
+                    links: [
+                        { name: "Warehouse & Logistics Automation", path: "/projects/group-3#project-8" },
+                        { name: "Corporate IT Infrastructure Setup", path: "/projects/group-3#project-9" },
+                        { name: "Pan-India AMC & Support", path: "/projects/group-3#project-10" },
+                        { name: "Global Delivery Model", path: "/projects" },
+                    ]
+                }
+            ],
+            featured: {
+                title: "Nationwide Impact",
+                label: "Featured Project",
+                image: "/data_center_infrastructure.jpg"
+            }
+        },
+        certifications: {
+            intro: {
+                title: "Quality & Excellence",
+                desc: "Our commitment to international standards and industry-leading certifications ensures the highest level of service delivery.",
+                cta: "Our Standards",
+                path: "/certifications"
+            },
+            columns: [
+                {
+                    title: "ISO Standards",
                     links: [
                         { name: "Vendor Automation Platform", path: "/projects/group-2#project-4" },
                         { name: "Workforce Deployment Project", path: "/projects/group-2#project-5" },
@@ -151,17 +191,20 @@ function Navbar() {
         ['/vision-mission', '/strength', '/corporate-structure'].includes(location.pathname);
     const isProjectsActive = location.pathname.startsWith('/projects');
     const isServicesActive = location.pathname.startsWith('/services');
+    const isCertificationsActive = location.pathname.startsWith('/certifications');
 
     const isMegaActive = (megaKey) => {
         if (megaKey === 'about') return isAboutActive;
         if (megaKey === 'projects') return isProjectsActive;
         if (megaKey === 'services') return isServicesActive;
+        if (megaKey === 'certifications') return isCertificationsActive;
         return false;
     };
 
     return (
         <>
             <nav className="bg-[#011b26] border-b border-white/10 px-6 h-20 fixed w-full top-0 z-[9999] transition-colors duration-500">
+            <nav className="bg-[#011b26] border-b border-white/10 px-6 h-20 fixed w-full top-0 z-[100] transition-colors duration-500">
                 <div className="max-w-[1400px] mx-auto flex items-center justify-between h-full relative">
 
                     {/* Logo Section */}
@@ -170,6 +213,9 @@ function Navbar() {
                             src="/HPE LOGO.png"
                             alt="HPE IT Solutions"
                             className="h-full scale-125 w-auto object-contain transition-all duration-300 group-hover:scale-135 group-hover:brightness-110"
+
+                            alt="HPE IT Solutions Logo"
+                            className="h-14 md:h-18 lg:h-20 w-auto object-contain transition-transform hover:scale-105 brightness-110"
                         />
                     </Link>
 
@@ -426,6 +472,17 @@ function Navbar() {
                                                     <ChevronDown className={`w-6 h-6 text-white/50 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
                                                 </button>
                                             </div>
+                                        <li key={nav.name} className="w-full text-center">
+                                            <button
+                                                onClick={() => setExpandedAccordion(isExpanded ? null : nav.name)}
+                                                className={`w-full font-black text-3xl uppercase tracking-wider flex items-center justify-center gap-2 py-4 cursor-pointer ${isActive
+                                                    ? 'text-[#00b0d4]'
+                                                    : 'text-white/60 hover:text-white transition-colors duration-300'
+                                                    }`}
+                                            >
+                                                {nav.name}
+                                                <ChevronDown className={`w-6 h-6 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                                            </button>
                                             <AnimatePresence>
                                                 {isExpanded && (
                                                     <motion.div
@@ -433,6 +490,8 @@ function Navbar() {
                                                         animate={{ height: 'auto', opacity: 1 }}
                                                         exit={{ height: 0, opacity: 0 }}
                                                         className="overflow-hidden flex flex-col gap-6 py-8 px-8 bg-white/5 rounded-3xl mt-2 mx-4"
+
+                                                        className="overflow-hidden flex flex-col gap-4 py-4 bg-white/5 rounded-2xl mb-4"
                                                     >
                                                         {/* Section Intro / Overview Link */}
                                                         <div className="text-center pb-4 border-b border-white/5">
@@ -461,6 +520,19 @@ function Navbar() {
                                                                         </Link>
                                                                     ))}
                                                                 </div>
+
+                                                            <div key={col.title} className="flex flex-col gap-2">
+                                                                <span className="text-[10px] font-black text-white/30 uppercase tracking-widest">{col.title}</span>
+                                                                {col.links.map((subLink) => (
+                                                                    <Link
+                                                                        key={subLink.name}
+                                                                        to={subLink.path}
+                                                                        onClick={() => setMenuOpen(false)}
+                                                                        className="text-lg font-bold text-white/70 hover:text-[#ff8d00] transition-colors"
+                                                                    >
+                                                                        {subLink.name}
+                                                                    </Link>
+                                                                ))}
                                                             </div>
                                                         ))}
                                                     </motion.div>

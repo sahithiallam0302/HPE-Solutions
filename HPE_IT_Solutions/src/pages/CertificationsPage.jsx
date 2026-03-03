@@ -97,6 +97,9 @@ const HighlightBadge = ({ item, index }) => (
             <CheckCircle className="w-8 h-8" />
         </div>
         <span className="text-xs font-black text-white uppercase tracking-widest leading-relaxed">
+
+        <span className="text-xs font-black text-[#011b26] dark:text-white uppercase tracking-widest">
+ main
             {item}
         </span>
     </motion.div>
@@ -194,6 +197,8 @@ const CertificationsPage = () => {
 
             {/* --- ENHANCED HERO SECTION --- */}
             <section className="relative min-h-[70vh] flex items-center pt-20 pb-24 md:pt-40 md:pb-52 overflow-hidden bg-[#011b26]">
+
+            <section className="relative min-h-[70vh] flex items-center pt-32 pb-24 md:pt-40 md:pb-52 overflow-hidden bg-[#011b26]">
                 {/* Animated Background Elements */}
                 <div className="absolute inset-0 pointer-events-none z-0">
                     {/* Main Glows */}
@@ -251,6 +256,8 @@ const CertificationsPage = () => {
                                 </h1>
 
                                 <p className="text-base md:text-lg text-slate-300 font-medium max-w-lg leading-relaxed mb-12 border-l-2 border-brand-cyan/30 pl-6">
+
+                                <p className="text-base md:text-lg text-slate-400 font-medium max-w-lg leading-relaxed mb-12 border-l-2 border-brand-cyan/30 pl-6">
                                     At HPE IT Solutions, we adhere to the most rigorous global benchmarks in quality, security, and operational excellence to deliver uncompromising value.
                                 </p>
 
@@ -388,6 +395,9 @@ const CertificationsPage = () => {
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
                         className="bg-hpe-navy-light dark:bg-white/5 border border-slate-200 dark:border-white/10 p-12 md:p-20 rounded-[40px] text-center relative overflow-hidden group shadow-2xl"
+
+                        className="bg-brand-navy-light dark:bg-white/5 border border-slate-200 dark:border-white/10 p-12 md:p-20 rounded-[40px] text-center relative overflow-hidden group shadow-2xl"
+ 
                     >
                         {/* Background elements */}
                         <div className="absolute top-0 right-0 w-64 h-64 bg-brand-cyan/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-brand-cyan/20 transition-colors duration-700" />
@@ -400,6 +410,13 @@ const CertificationsPage = () => {
                                 <span className="text-brand-cyan">Compliant</span> Organization
                             </h2>
                             <p className="text-slate-300 text-lg mb-12 max-w-2xl mx-auto font-medium">
+
+                            <h2 className="text-3xl md:text-5xl font-black mb-8 leading-tight text-[#011b26] dark:text-white">
+                                Partner with a Certified & <br />
+                                <span className="text-brand-cyan">Compliant</span> Organization
+                            </h2>
+                            <p className="text-slate-500 dark:text-slate-400 text-lg mb-12 max-w-2xl mx-auto font-medium">
+ 
                                 Ensure your enterprise infrastructure projects are handled by team committed to global quality and security benchmarks.
                             </p>
 
@@ -409,6 +426,8 @@ const CertificationsPage = () => {
                                     whileTap={{ scale: 0.95 }}
                                     onClick={() => navigate('/contact')}
                                     className="w-full sm:w-auto bg-brand-orange text-white px-10 py-5 rounded-full font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-hpe-navy/20 flex items-center justify-center group cursor-pointer"
+
+                                    className="w-full sm:w-auto bg-brand-orange text-white px-10 py-5 rounded-full font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-orange-950/20 flex items-center justify-center group cursor-pointer"
                                 >
                                     <PhoneCall className="w-5 h-5 mr-3" />
                                     Contact Us
