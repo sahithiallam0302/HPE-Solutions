@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, useInView } from 'motion/react';
-
+import { motion, useInView } from 'framer-motion';
 const CountUp = ({ value, color }) => {
     const [count, setCount] = useState(0);
     const ref = useRef(null);
@@ -58,10 +57,10 @@ const WorkforceStrength = () => {
             <div className="max-w-7xl mx-auto relative z-10">
                 {/* Header */}
                 <div className="text-center mb-8">
-                    <span className="text-brand-orange text-[10px] font-black tracking-[0.3em] uppercase mb-2 block">
+                    <span className="text-brand-orange text-[9px] md:text-[10px] font-black tracking-[0.2em] md:tracking-[0.3em] uppercase mb-2 block">
                         OUR PEOPLE
                     </span>
-                    <h2 id="workforce-heading" className="text-2xl md:text-4xl font-black mb-3 leading-tight text-[#011b26] dark:text-white">
+                    <h2 id="workforce-heading" className="text-xl md:text-4xl font-black mb-3 leading-tight text-[#011b26] dark:text-white">
                         Workforce Strength
                     </h2>
                     <p className="text-slate-600 dark:text-slate-400 text-sm md:text-base max-w-2xl mx-auto font-medium">

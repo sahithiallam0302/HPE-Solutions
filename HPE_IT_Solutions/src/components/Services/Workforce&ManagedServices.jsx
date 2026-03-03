@@ -197,6 +197,8 @@ const WorkforceManagedServices = () => {
             {/* ──────────────────────────────────────────
                 HERO
             ────────────────────────────────────────── */}
+            <section className="relative min-h-[80vh] flex items-center pt-20 pb-28 overflow-hidden bg-[#011b26]">
+
             <section className="relative min-h-[80vh] flex items-center pt-32 pb-28 overflow-hidden bg-[#011b26]">
                 {/* Background glows */}
                 <div className="absolute inset-0 pointer-events-none z-0">

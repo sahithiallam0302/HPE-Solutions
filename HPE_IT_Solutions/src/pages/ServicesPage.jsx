@@ -63,6 +63,8 @@ const DivisionCard = ({
                 <Glass isDark={isDark} className="p-8 md:p-10 h-full relative overflow-hidden hover:scale-[1.015] hover:shadow-2xl transition-all duration-500 cursor-pointer">
 
                     {/* Glow blob on hover */}
+                    <div className={`absolute -top-20 -right-24 w-64 h-64 ${glowColor} rounded-full blur-[80px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none`} />
+
                     <div className={`absolute -top-24 -right-24 w-64 h-64 ${glowColor} rounded-full blur-[80px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none`} />
 
                     {/* Top Row: Division No + Icon */}
@@ -205,6 +207,7 @@ const ServicesPage = () => {
             {/* ──────────────────────────────────────────
                 HERO
             ────────────────────────────────────────── */}
+            <section className="relative min-h-[72vh] flex items-center pt-20 pb-24 overflow-hidden bg-[#011b26]">
             <section className="relative min-h-[72vh] flex items-center pt-32 pb-24 overflow-hidden bg-[#011b26]">
                 {/* Background glows */}
                 <div className="absolute inset-0 pointer-events-none z-0">

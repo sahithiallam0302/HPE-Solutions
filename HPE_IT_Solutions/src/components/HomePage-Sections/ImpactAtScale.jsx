@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, useInView } from 'motion/react';
+import { motion, useInView } from 'framer-motion';
 import { GitMerge, Users, Layout, IndianRupee } from 'lucide-react';
 
 const AnimatedCounter = ({ end, prefix = "", suffix = "" }) => {
@@ -76,7 +76,7 @@ const ImpactAtScale = () => {
                     <span className="text-brand-orange text-[10px] font-black tracking-[0.3em] uppercase mb-3 block">
                         OUR IMPACT
                     </span>
-                    <h2 id="impact-heading" className="text-3xl md:text-4xl font-black text-[#011b26] dark:text-white mb-4">
+                    <h2 id="impact-heading" className="text-4xl md:text-6xl text-[#011b26] dark:text-white mb-4 tracking-tight">
                         Impact at Scale
                     </h2>
                     <p className="text-slate-500 dark:text-slate-400 text-sm md:text-base max-w-2xl mx-auto">

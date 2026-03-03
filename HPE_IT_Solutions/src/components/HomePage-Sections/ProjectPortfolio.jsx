@@ -1,169 +1,105 @@
-import React from 'react';
-import { ArrowRight, MapPin, Building2 } from 'lucide-react';
-import { motion } from 'motion/react';
-import { useNavigate } from 'react-router-dom';
-
-// Animation variants
-const fadeIn = (direction = 'up', delay = 0) => ({
-    hidden: {
-        y: direction === 'up' ? 50 : direction === 'down' ? -50 : 0,
-        x: direction === 'left' ? 50 : direction === 'right' ? -50 : 0,
-        opacity: 0,
-        scale: 0.95
-    },
-    show: {
-        y: 0,
-        x: 0,
-        opacity: 1,
-        scale: 1,
-        transition: {
-            type: 'spring',
-            duration: 1.25,
-            delay: delay,
-            bounce: 0.3
-        }
-    }
-});
-
-const ProjectCard = ({ project, index }) => {
-    return (
-        <motion.div
-            variants={fadeIn('up', index * 0.1)}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.1 }}
-            className="group relative flex flex-col h-full"
-        >
-            {/* Lighting Hover Effect (Gradient Glow) */}
-            <div className="absolute -inset-2 bg-gradient-to-tr from-hpe-cyan/20 to-hpe-orange/20 blur-2xl rounded-3xl opacity-0 group-hover:opacity-50 transition-opacity duration-700 pointer-events-none z-0" />
-
-            <div className="h-full relative z-10 p-[1px] rounded-2xl bg-gradient-to-b from-white/10 to-transparent group-hover:from-hpe-cyan group-hover:to-hpe-orange transition-all duration-500 overflow-hidden shadow-xl hover:shadow-2xl hover:-translate-y-2">
-                <div className="h-full bg-white dark:bg-[#022534] rounded-2xl border border-slate-100 dark:border-white/5 flex flex-col overflow-hidden transition-colors duration-500">
-                    {/* Image Container */}
-                    <div className="relative h-44 overflow-hidden">
-                        <img
-                            src={project.image}
-                            alt={project.title}
-                            className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                        />
-                        <div className="absolute top-4 left-4">
-                            <span className="bg-brand-orange text-white text-[10px] font-black px-4 py-2 rounded-full uppercase tracking-widest shadow-xl ring-2 ring-white/20">
-                                {project.tag}
-                            </span>
-                        </div>
-                        {/* Overlay on hover */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    </div>
-
-                    {/* Content */}
-                    <div className="p-5 flex flex-col flex-grow relative">
-                        <div className="flex items-center space-x-5 mb-3">
-                            <div className="flex items-center text-slate-400 dark:text-slate-500 text-[10px] font-black uppercase tracking-[0.2em]">
-                                <MapPin className="w-3.5 h-3.5 mr-2 text-hpe-cyan" />
-                                {project.location}
-                            </div>
-                            <div className="flex items-center text-slate-400 dark:text-slate-500 text-[10px] font-black uppercase tracking-[0.2em]">
-                                <Building2 className="w-3.5 h-3.5 mr-2 text-hpe-cyan" />
-                                {project.industry}
-                            </div>
-                        </div>
-
-                        <h3 className="text-xl font-bold text-[#011b26] dark:text-white mb-4 leading-snug group-hover:text-hpe-cyan transition-colors duration-300">
-                            {project.title}
-                        </h3>
-
-                        <div className="mt-auto pt-4 flex items-center text-brand-orange font-black text-[12px] uppercase tracking-[0.3em] group-hover:text-hpe-cyan group-hover:translate-x-3 transition-all duration-300 cursor-pointer">
-                            <span>Project Case Study</span>
-                            <ArrowRight className="w-5 h-5 ml-3" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </motion.div>
-    );
-};
+import React, { useRef } from 'react';
+import { ArrowLeft, ArrowRight, Briefcase } from 'lucide-react';
+import { motion } from "framer-motion";
 
 const ProjectPortfolio = () => {
-    const navigate = useNavigate();
-    const projects = [
-        {
-            title: "Digital Transformation for State Government",
-            location: "Hyderabad",
-            industry: "Government",
-            tag: "ERP",
-            image: "/src/assets/images/projects/gov_digital.png"
-        },
-        {
-            title: "Smart Campus Infrastructure",
-            location: "Bangalore",
-            industry: "Education",
-            tag: "IoT & Infra",
-            image: "/src/assets/images/projects/smart_campus.png"
-        },
-        {
-            title: "Enterprise Data Analytics Platform",
-            location: "Mumbai",
-            industry: "Financial Services",
-            tag: "Analytics",
-            image: "/src/assets/images/projects/data_analytics.png"
-        },
-        {
-            title: "Highway Construction Monitoring",
-            location: "Delhi NCR",
-            industry: "Infrastructure",
-            tag: "IoT",
-            image: "/src/assets/images/projects/highway_monitoring.png"
-        },
-        {
-            title: "Cloud Migration for Telecom Giant",
-            location: "Chennai",
-            industry: "Telecom",
-            tag: "Cloud",
-            image: "/src/assets/images/projects/telecom_cloud.png"
-        },
-        {
-            title: "Multi-site ERP Deployment",
-            location: "Pune",
-            industry: "Manufacturing",
-            tag: "Automation",
-            image: "/src/assets/images/projects/data_analytics.png"
-        }
+    const scrollRef = useRef(null);
+
+    const projectNames = [
+        "National Real Estate ERP Implementation",
+        "SmartSite Monitoring System",
+        "Government Infrastructure Digitization",
+        "Enterprise Vendor Automation Platform",
+        "Multi-State Workforce Deployment Project",
+        "Construction Billing & Cost Control Software",
+        "Large-Scale Housing Project Management System",
+        "Large-Scale Housing Project Management System",
+        "Corporate IT Infrastructure Setup",
+        "Pan-India AMC & Technical Support Program"
     ];
 
+    const scroll = (direction) => {
+        if (scrollRef.current) {
+            const { scrollLeft, clientWidth } = scrollRef.current;
+            const scrollTo = direction === 'left' ? scrollLeft - clientWidth / 2 : scrollLeft + clientWidth / 2;
+            scrollRef.current.scrollTo({ left: scrollTo, behavior: 'smooth' });
+        }
+    };
+
     return (
-        <section id="projects" className="bg-slate-50 dark:bg-[#011b26] py-12 px-6 md:py-16 transition-colors duration-500 overflow-hidden" aria-labelledby="portfolio-heading">
+        <section id="projects" className="bg-[#020c13] py-16 px-6 md:py-24 transition-colors duration-500 overflow-hidden" aria-labelledby="portfolio-heading">
             <div className="max-w-7xl mx-auto">
                 {/* Section Header */}
-                <div className="text-center mb-10 md:mb-14 px-4">
-                    <span className="inline-block font-rajdhani text-brand-orange tracking-[0.4em] font-black text-xs uppercase mb-4 px-4 py-2 bg-brand-orange/10 rounded-full">
-                        PORTFOLIO
-                    </span>
-                    <h2 id="portfolio-heading" className="text-4xl md:text-5xl lg:text-6xl font-black text-[#011b26] dark:text-white mb-6 tracking-tight">
-                        Impact at <span className="text-transparent bg-clip-text bg-gradient-to-r from-hpe-cyan to-hpe-orange">Scale</span>
-                    </h2>
-                    <p className="text-slate-500 dark:text-slate-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed font-medium">
-                        A selection of our transformative enterprise projects delivered across India.
-                    </p>
+                <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+                    <div className="text-left">
+                        <span className="inline-block font-rajdhani text-brand-orange tracking-[0.2em] md:tracking-[0.4em] font-black text-[10px] md:text-xs uppercase mb-4">
+                            PORTFOLIO
+                        </span>
+                        <h2 id="portfolio-heading" className="text-3xl sm:text-4xl md:text-6xl text-white leading-none tracking-tight uppercase">
+                            Impact at <span className="text-brand-cyan">Scale</span>
+                        </h2>
+                    </div>
+
+                    {/* Navigation Buttons */}
+                    <div className="flex gap-4">
+                        <button
+                            onClick={() => scroll('left')}
+                            className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white hover:bg-brand-cyan hover:border-brand-cyan transition-all cursor-pointer group"
+                            aria-label="Previous Projects"
+                        >
+                            <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
+                        </button>
+                        <button
+                            onClick={() => scroll('right')}
+                            className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white hover:bg-brand-cyan hover:border-brand-cyan transition-all cursor-pointer group"
+                            aria-label="Next Projects"
+                        >
+                            <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                        </button>
+                    </div>
                 </div>
 
-                {/* Projects Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-12">
-                    {projects.map((project, index) => (
-                        <ProjectCard key={index} project={project} index={index} />
+                {/* Horizontal Scroll Area */}
+                <div
+                    ref={scrollRef}
+                    className="flex gap-6 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-8 px-2"
+                    style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                >
+                    {projectNames.map((name, index) => (
+                        <motion.div
+                            key={index}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: index * 0.05 }}
+                            className="flex-shrink-0 w-80 snap-center"
+                        >
+                            <div className="h-48 bg-[#0a1219] p-8 rounded-2xl border border-white/5 hover:border-brand-cyan/30 transition-all group flex flex-col justify-between relative overflow-hidden">
+                                {/* Background Accent Icon */}
+                                <div className="absolute -bottom-4 -right-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                                    <Briefcase size={120} className="text-white" />
+                                </div>
+
+                                <div className="space-y-4 relative z-10">
+                                    <div className="w-10 h-10 rounded-lg bg-brand-cyan/10 flex items-center justify-center text-brand-cyan">
+                                        <Briefcase size={20} />
+                                    </div>
+                                    <h3 className="text-lg md:text-xl font-rajdhani font-black text-white leading-tight group-hover:text-brand-cyan transition-colors line-clamp-3">
+                                        {name}
+                                    </h3>
+                                </div>
+
+                                <div className="text-[10px] font-black tracking-widest text-slate-500 uppercase mt-4">
+                                    Project {index + 1}
+                                </div>
+                            </div>
+                        </motion.div>
                     ))}
                 </div>
 
-                {/* CTA Button */}
-                <div className="text-center">
-                    <motion.button
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="bg-brand-orange text-white px-12 py-5 rounded-full font-black text-sm uppercase tracking-[0.3em] hover:shadow-[0_0_30px_rgba(255,141,0,0.4)] transition-all duration-300 flex items-center mx-auto space-x-4 cursor-pointer"
-                        onClick={() => navigate('/projects')}
-                    >
-                        <span>View All Experience</span>
-                        <ArrowRight className="w-6 h-6" />
-                    </motion.button>
+                {/* Visual Scroll Track (Static Decoration) */}
+                <div className="w-full h-[1px] bg-white/5 mt-8 relative">
+                    <div className="absolute top-0 left-0 w-1/4 h-[2px] bg-brand-cyan rounded-full" />
                 </div>
             </div>
         </section>

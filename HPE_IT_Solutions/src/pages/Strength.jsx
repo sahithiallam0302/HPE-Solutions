@@ -38,12 +38,6 @@ const contentBlocks = [
     { icon: ShieldCheck, color: 'text-indigo-400', borderColor: 'border-indigo-400/25', label: 'Governance & Management', title: 'Structured Oversight at Every Level', body: ['Our governance architecture integrates ISO-certified audit frameworks, structured reporting protocols, and multi-layer approval mechanisms that ensure total operational transparency.', 'Senior management visibility into every project lifecycle — from initiation through closure — ensures that strategic intent is translated accurately into field execution. Our institutional governance culture is the foundation of our reliability.'] },
 ];
 
-const mediaGrid = [
-    { type: 'image', src: '/data_center_infrastructure.jpg', alt: 'Data Center Infrastructure', label: 'Data Center Infrastructure', sublabel: 'High-density compute environments' },
-    { type: 'image', src: '/FieldOperations.png', alt: 'Field Operations', label: 'Field Operations', sublabel: 'On-ground execution teams' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069', alt: 'Corporate Operations Hub', label: 'Corporate Operations Hub', sublabel: 'Centralized strategic management' },
-    { type: 'video', src: 'https://videos.pexels.com/video-files/3129957/3129957-uhd_2560_1440_25fps.mp4', label: 'Project Coordination', sublabel: 'Integrated delivery management' },
-];
 
 const Strength = () => {
     const { theme } = useTheme();
@@ -156,41 +150,6 @@ const Strength = () => {
                 </div>
             </section>
 
-            {/* SUPPORTING MEDIA GRID */}
-            <section className="px-8 md:px-16 py-4">
-                <div className="max-w-7xl mx-auto">
-                    <FadeUp className="mb-10 space-y-3">
-                        <Label text="Portfolio" color="text-orange-400" isDark={isDark} />
-                        <h2 className={`text-lg font-semibold uppercase tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                            Operations in Practice
-                        </h2>
-                    </FadeUp>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                        {mediaGrid.map((item, i) => (
-                            <FadeUp key={i} delay={i * 0.1}>
-                                <div className={`group relative overflow-hidden rounded-xl border transition-all duration-300 h-64 ${isDark ? 'border-white/10 hover:border-white/20' : 'border-slate-200 hover:shadow-lg shadow-sm'}`}>
-                                    {item.type === 'image' ? (
-                                        <img src={item.src} alt={item.alt} className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 grayscale-[0.1] group-hover:scale-[1.04] ${isDark ? 'opacity-60 group-hover:opacity-80' : 'opacity-90 group-hover:opacity-100'}`} />
-                                    ) : (
-                                        <video autoPlay loop muted playsInline className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ${isDark ? 'opacity-70 group-hover:opacity-90' : 'opacity-90 group-hover:opacity-100'}`}>
-                                            <source src="https://player.vimeo.com/external/370331493.hd.mp4?s=ca09687f61d79496052be5cc07c04e0a96f13454&profile_id=174" type="video/mp4" />
-                                        </video>
-                                    )}
-                                    <div className={`absolute inset-0 transition-colors duration-500 ${isDark ? 'bg-gradient-to-t from-[#0a0f1e]/90 via-[#0a0f1e]/20 to-transparent' : 'bg-gradient-to-t from-black/60 via-transparent to-transparent'}`} />
-                                    <div className="absolute bottom-5 left-5 right-5 space-y-1">
-                                        <p className="text-sm font-black uppercase tracking-tight text-white">{item.label}</p>
-                                        <p className="text-[10px] font-bold uppercase tracking-widest text-white/60">{item.sublabel}</p>
-                                    </div>
-                                    <div className="absolute bottom-0 left-0 h-0.5 w-0 group-hover:w-full bg-gradient-to-r from-orange-400 to-blue-500 transition-all duration-500" />
-                                </div>
-                            </FadeUp>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            <div className="h-16" />
-            <Divider isDark={isDark} />
 
             {/* TECHNICAL CAPABILITY + INFRA REACH */}
             <section id="technical-capability" className="px-8 md:px-16 py-24">
